@@ -61,7 +61,7 @@
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,7 +105,7 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

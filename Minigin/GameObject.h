@@ -1,10 +1,12 @@
 #pragma once
 #include <memory>
+#include <vector>
+
 #include "Transform.h"
 
 namespace dae
 {
-	class Texture2D;
+	class Component;
 
 	// todo: this should become final.
 	class GameObject 
@@ -23,9 +25,20 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		template<typename T_Component>
+		T_Component* AddComponent(T_Component* pComponent);
+
 	private:
 		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		// todo: move this into texture renderer class
+		//std::shared_ptr<Texture2D> m_texture{};
+		std::vector<Component*> m_Components;
 	};
+
+	template<typename T_Component>
+	inline T_Component* GameObject::AddComponent(T_Component* pComponent)
+	{
+		m_Components.push_back(pComponent);
+		return pComponent;
+	}
 }

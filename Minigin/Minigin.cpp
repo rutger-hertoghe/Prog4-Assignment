@@ -5,10 +5,14 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "Minigin.h"
+
+#include <iostream>
+
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 SDL_Window* g_window{};
 
@@ -65,6 +69,8 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
+
+	Time::GetInstance();
 }
 
 dae::Minigin::~Minigin()
@@ -83,10 +89,11 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
 	while (doContinue)
 	{
+		Time::GetInstance().Update();
+
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();

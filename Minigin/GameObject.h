@@ -1,22 +1,26 @@
 #pragma once
 #include <memory>
-#include <vector>
+#include <string>
+#include "TypeMap.h"
+#include <stdexcept>
+#include <iostream>
+#include "Component.h"
 
 #include "Transform.h"
 
 namespace dae
 {
+	class Texture2D;
 	class Component;
 
-	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
 		virtual void Render() const;
 
-		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
+		const Transform& GetTransform() const;
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -26,19 +30,50 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		template<typename T_Component>
-		T_Component* AddComponent(T_Component* pComponent);
+		T_Component* GetComponent();
+
+		template<typename T_Component>
+		void AddComponent(Component* pComponent);
+
+		template<typename T_Component>
+		bool RemoveComponent();
 
 	private:
 		Transform m_transform{};
-		// todo: move this into texture renderer class
-		//std::shared_ptr<Texture2D> m_texture{};
-		std::vector<Component*> m_Components;
+		TypeMap<Component*> m_pComponents;
+		void SetComponentParent(Component* pComponent);
 	};
 
-	template<typename T_Component>
-	inline T_Component* GameObject::AddComponent(T_Component* pComponent)
+	template <typename T_Component>
+	T_Component* GameObject::GetComponent()
 	{
-		m_Components.push_back(pComponent);
-		return pComponent;
+		try
+		{
+			auto pComponent{ m_pComponents.at<T_Component>() };
+			return static_cast<T_Component*>(pComponent);
+		}
+		catch(TypeNotInMapException&)
+		{
+			std::cerr << "GameObject does not have specified component attached!\n";
+			return nullptr;
+		}
 	}
+
+	template<typename T_Component>
+	void GameObject::AddComponent(Component * pComponent)
+	{
+		SetComponentParent(pComponent);
+		m_pComponents.emplace<T_Component>(pComponent);
+	}
+
+	template<typename T_Component>
+	bool GameObject::RemoveComponent()
+	{
+		auto pComponent = GetComponent<T_Component>();
+		if (pComponent == nullptr) return false;
+
+		delete pComponent;
+
+		return m_pComponents.erase<T_Component>();
+	}	
 }

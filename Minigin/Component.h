@@ -1,12 +1,35 @@
 #pragma once
 #include <memory>
+#include <string>
 
-class GameObject;
+#include "GameObject.h"
 
-class Component
+namespace dae
 {
-public:
-	Component() = default;
-private:
-	std::shared_ptr<GameObject> parentObject;
-};
+	class GameObject;
+
+	class Component
+	{
+	public:
+		Component() = default;
+		virtual ~Component() = default;
+
+		Component(const Component& other) = delete;
+		Component& operator=(const Component& other) = delete;
+		Component(Component&& other) = delete;
+		Component& operator=(Component&& other) = delete;
+
+		//virtual void Start() = 0;
+		virtual void Update() = 0;
+		virtual void Render() = 0;
+
+		void SetParentObject(GameObject* pParent) // TODO: don't use this, find alternative
+		{
+			m_pParentObject = pParent;
+		}
+
+	protected:
+		// Todo: look into using shared_ptr instead
+		GameObject* m_pParentObject;
+	};
+}

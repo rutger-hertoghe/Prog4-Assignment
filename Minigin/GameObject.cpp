@@ -1,26 +1,53 @@
+#include "GameObject.h"
+
 #include <string>
 #include "GameObject.h"
+
+#include <ranges>
+
+
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "Component.h"
 
-dae::GameObject::~GameObject() = default;
+using namespace dae;
 
-void dae::GameObject::Update(){}
-
-void dae::GameObject::Render() const
+GameObject::~GameObject()
 {
-	const auto& pos = m_transform.GetPosition();
-	// todo: move this out of game object & into texture renderer component?
-	//Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	for(const auto pComponent : m_pComponents)
+	{
+		delete pComponent.second;
+	}
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
+void dae::GameObject::SetComponentParent(Component* pComponent)
 {
-	// todo: move this out of game object & into texture renderer component?
-	//m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	// Todo: find better solution, this seems a little hacky
+	pComponent->SetParentObject(this);
+}
+
+void GameObject::Update()
+{
+	for(const auto pComponent : m_pComponents | std::views::values)
+	{
+		pComponent->Update();
+	}
+}
+
+void GameObject::Render() const
+{
+	for(const auto pComponent : m_pComponents | std::views::values)
+	{
+		pComponent->Render();
+	}	
 }
 
 void dae::GameObject::SetPosition(float x, float y)
 {
 	m_transform.SetPosition(x, y, 0.0f);
+}
+
+const Transform& GameObject::GetTransform() const
+{
+	return m_transform;
 }

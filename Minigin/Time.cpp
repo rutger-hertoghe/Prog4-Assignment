@@ -1,24 +1,26 @@
 #include "Time.h"
 
+#include <iostream>
+
 Time::Time()
 {
-	start = std::chrono::high_resolution_clock::now();
+	m_Start = std::chrono::high_resolution_clock::now();
 }
 
 void Time::Update()
 {
-	currentPoint = std::chrono::high_resolution_clock::now();
+	m_CurrentPoint = std::chrono::high_resolution_clock::now();
 
-	deltaTime = std::chrono::duration<float>(currentPoint - lastPoint).count();
-	lastPoint = currentPoint;
+	m_DeltaTime = std::chrono::duration<float>(m_CurrentPoint - m_LastPoint).count();
+	m_LastPoint = m_CurrentPoint;
 }
 
 float Time::GetElapsed() const
 {
-	return deltaTime;
+	return m_DeltaTime;
 }
 
 float Time::GetTotal() const
 {
-	return std::chrono::duration<float>(currentPoint - start).count();
+	return std::chrono::duration<float>(m_CurrentPoint - m_Start).count();
 }

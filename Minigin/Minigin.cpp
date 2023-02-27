@@ -93,9 +93,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		Time::GetInstance().Update();
-
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
+		// TODO: add sleep to reduce CPU load
 	}
 }

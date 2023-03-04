@@ -8,41 +8,24 @@ using namespace dae;
 
 class TextComponentNotFound{};
 
-FPSCounterComponent::FPSCounterComponent(float loggingRate)
-	: m_TimePerLog(loggingRate)
+FPSCounterComponent::FPSCounterComponent(GameObject* pParent, float loggingRate)
+	: Component(pParent)
+	, m_TimePerLog(loggingRate)
 	, m_pLinkedText(nullptr)
 	, m_TimeSinceLastLog(0.f)
 	, m_FramesSinceLastLog(0)
 {
-}
-
-//void FPSCounterComponent::Start()
-//{
-//	m_pLinkedText = m_pParentObject->GetComponent<dae::TextComponent>();
-//	if(m_pLinkedText == nullptr)
-//	{
-//		std::cerr << "Necessary text component not found!\n";
-//		throw TextComponentNotFound();
-//	}
-//}
-
-void FPSCounterComponent::Render()
-{
-	// Nothing to render
+	m_pLinkedText = GetParentObject()->GetComponent<TextComponent>();
+	// TODO: use assert instead of throw?
+	if (m_pLinkedText == nullptr)
+	{
+		std::cerr << "Necessary text component not found!\n";
+		throw TextComponentNotFound();
+	}
 }
 
 void FPSCounterComponent::Update()
 {
-	if(m_pLinkedText == nullptr)
-	{
-		m_pLinkedText = m_pParentObject->GetComponent<TextComponent>();
-		if(m_pLinkedText == nullptr)
-		{
-			std::cerr << "Necessary text component not found!\n";
-			throw TextComponentNotFound();
-		}
-	}
-
 	++m_FramesSinceLastLog;
 	m_TimeSinceLastLog += Time::GetInstance().GetElapsed();
 

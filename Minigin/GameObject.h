@@ -17,7 +17,7 @@ namespace dae
 	{
 	public:
 		virtual void Update();
-		virtual void Render() const;
+		virtual void Render(); //const;
 
 		void SetPosition(float x, float y);
 		const Transform& GetTransform() const;
@@ -30,7 +30,7 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		template<typename T_Component>
-		T_Component* GetComponent();
+		T_Component* GetComponent(); //const;
 
 		template<typename T_Component>
 		void AddComponent(Component* pComponent);
@@ -41,11 +41,10 @@ namespace dae
 	private:
 		Transform m_transform{};
 		TypeMap<Component*> m_pComponents;
-		void SetComponentParent(Component* pComponent);
 	};
 
 	template <typename T_Component>
-	T_Component* GameObject::GetComponent()
+	T_Component* GameObject::GetComponent() //const
 	{
 		try
 		{
@@ -62,7 +61,6 @@ namespace dae
 	template<typename T_Component>
 	void GameObject::AddComponent(Component * pComponent)
 	{
-		SetComponentParent(pComponent);
 		m_pComponents.emplace<T_Component>(pComponent);
 	}
 

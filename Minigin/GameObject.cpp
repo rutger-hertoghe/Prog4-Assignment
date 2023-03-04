@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "Component.h"
+#include "TextureComponent.h"
 
 using namespace dae;
 
@@ -20,12 +21,6 @@ GameObject::~GameObject()
 	}
 }
 
-void dae::GameObject::SetComponentParent(Component* pComponent)
-{
-	// Todo: find better solution, this seems a little hacky
-	pComponent->SetParentObject(this);
-}
-
 void GameObject::Update()
 {
 	for(const auto pComponent : m_pComponents | std::views::values)
@@ -34,12 +29,16 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::Render() const
+void GameObject::Render() //const
 {
-	for(const auto pComponent : m_pComponents | std::views::values)
+	// TODO: cache this?
+	const auto textureComponent{ GetComponent<TextureComponent>() };
+	textureComponent->Render();
+
+	/*for(const auto pComponent : m_pComponents | std::views::values)
 	{
 		pComponent->Render();
-	}	
+	}*/
 }
 
 void dae::GameObject::SetPosition(float x, float y)

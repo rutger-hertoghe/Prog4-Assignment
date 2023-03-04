@@ -10,8 +10,8 @@ namespace dae
 	class TextureComponent final : public Component
 	{
 	public:
-		TextureComponent() = delete;
-		TextureComponent(const std::string& filename);
+		explicit TextureComponent(GameObject* pParent, const std::string& filename);
+		explicit TextureComponent(GameObject* pParent);
 
 		virtual ~TextureComponent() override = default;
 
@@ -22,12 +22,13 @@ namespace dae
 
 		//virtual void Start() override;
 		virtual void Update() override;
-		virtual void Render() override;
+		void Render() const;
 
 		void SetTexture(const std::string& filename);
+		void SetTexture(std::shared_ptr<Texture2D> pTexture);
 
 	private:
-		std::shared_ptr<Texture2D> m_texture{};
+		std::shared_ptr<Texture2D> m_Texture{};
 	};
 }
 

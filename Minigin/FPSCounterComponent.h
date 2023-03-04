@@ -8,11 +8,8 @@ namespace dae
 	class FPSCounterComponent : public Component
 	{
 	public:
-		FPSCounterComponent() = delete;
-		FPSCounterComponent(float loggingRate);
+		explicit FPSCounterComponent(GameObject* pParent, float loggingRate);
 
-
-		void Render() override;
 		void Update() override;
 
 	private:

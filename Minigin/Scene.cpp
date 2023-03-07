@@ -27,7 +27,6 @@ void Scene::RemoveAll()
 
 void Scene::Update()
 {
-	// TODO: shared owne
 	for(auto& object : m_objects)
 	{
 		object->Update();

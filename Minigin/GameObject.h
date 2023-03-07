@@ -38,6 +38,9 @@ namespace dae
 		template<typename T_Component>
 		T_Component* GetComponent(); //const; // TODO: QUESTION why does setting const here break my code?
 
+		template<typename T_Component, typename... Args, typename = std::enable_if_t<std::is_constructible_v<T_Component, GameObject*, Args...>>>
+		T_Component* AddComponent(Args... args);
+
 		template<typename T_Component>
 		T_Component* AddComponent(Component* pComponent);
 
@@ -92,6 +95,14 @@ namespace dae
 	template<typename T_Component>
 	T_Component* GameObject::AddComponent(Component * pComponent)
 	{
+		m_pComponents.emplace<T_Component>(pComponent);
+		return static_cast<T_Component*>(pComponent);
+	}
+
+	template<typename T_Component, typename... Args, typename>
+	T_Component* GameObject::AddComponent(Args... args)
+	{
+		auto pComponent = new T_Component(this, args...);
 		m_pComponents.emplace<T_Component>(pComponent);
 		return static_cast<T_Component*>(pComponent);
 	}

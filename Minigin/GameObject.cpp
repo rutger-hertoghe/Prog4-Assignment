@@ -13,10 +13,10 @@ using namespace dae;
 GameObject::~GameObject()
 {
 	// View values makes sure that the element returned is the value in the ordered map (not the key/value pair)
-	for(const auto& pComponent : m_pComponents | std::views::values) 
+	/*for(const auto& pComponent : m_pComponents | std::views::values) 
 	{
 		delete pComponent;
-	}
+	}*/
 }
 
 void GameObject::Update()

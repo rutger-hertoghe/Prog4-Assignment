@@ -38,8 +38,11 @@ namespace dae
 		template<typename T_Component>
 		T_Component* GetComponent(); //const; // TODO: QUESTION why does setting const here break my code?
 
-		template<typename T_Component>
-		T_Component* AddComponent(Component* pComponent);
+		// TODO: further look into this
+		//// std::is_constructible_v<T_Component, Args...> checks if type 'T_Component' can be constructed from the arguments, if so, the function is enabled
+		//template<typename T_Component, typename... Args, std::enable_if_t<std::is_constructible_v<T_Component, Args...>>>
+		template<typename T_Component, typename... Args, typename = std::enable_if_t<std::is_constructible_v<T_Component, Args...>>>
+		T_Component* AddComponent(Args... args);
 
 		template<typename T_Component>
 		bool RemoveComponent();
@@ -58,7 +61,7 @@ namespace dae
 		Transform m_LocalTransform{};
 		Transform m_WorldTransform{};
 
-		TypeMap<Component*> m_pComponents;
+		TypeMap<std::unique_ptr<Component>> m_pComponents;
 
 		shared_ptr<GameObject> m_pParent;
 		// TODO: why shared_ptr's here? Now children are shared with scene, but could be handled within gameObjects?
@@ -77,7 +80,8 @@ namespace dae
 	template <typename T_Component>
 	T_Component* GameObject::GetComponent() //const
 	{
-		try
+		// TODO: reimplement this
+		/*try
 		{
 			auto pComponent{ m_pComponents.at<T_Component>() };
 			return static_cast<T_Component*>(pComponent);
@@ -86,15 +90,27 @@ namespace dae
 		{
 			std::cerr << "GameObject does not have specified component attached!\n";
 			return nullptr;
-		}
+		}*/
+		return nullptr;
 	}
 
-	template<typename T_Component>
-	T_Component* GameObject::AddComponent(Component * pComponent)
+	//template<typename T_Component>
+	template<typename T_Component, typename... Args, typename>
+	T_Component* GameObject::AddComponent(Args... args)
 	{
-		m_pComponents.emplace<T_Component>(pComponent);
-		return static_cast<T_Component*>(pComponent);
+		auto unqComponent = std::make_unique<T_Component>(args...);
+		auto rawPtr = unqComponent.get();
+		m_pComponents.emplace<T_Component>(std::move(unqComponent));
+		return rawPtr;
 	}
+
+	/*template<typename T_Component>
+	T_Component* GameObject::AddComponent(std::unique_ptr<T_Component> pComponent)
+	{
+		auto rawPtr = pComponent.get();
+		m_pComponents.emplace<T_Component>(std::move(pComponent));
+		return static_cast<T_Component*>(rawPtr);
+	}*/
 
 	template<typename T_Component>
 	bool GameObject::RemoveComponent()
@@ -115,7 +131,8 @@ namespace dae
 		{
 			// TODO: remove because of cluttering & lack of clarity in console?
 			std::cout << "Necessary text component not found! Automatically attaching " << typeid(T_Component).name() <<" to object!\n";
-			pRequiredComponent = AddComponent<T_Component>(new T_Component(this));
+			// TODO: reenable this when AddComponent is in order
+			//pRequiredComponent = AddComponent<T_Component>(new T_Component(this));
 		}
 		return pRequiredComponent;
 	}

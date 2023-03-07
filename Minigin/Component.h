@@ -15,8 +15,17 @@ namespace dae
 
 		Component(const Component& other) = delete;
 		Component& operator=(const Component& other) = delete;
-		Component(Component&& other) = delete;
-		Component& operator=(Component&& other) = delete;
+		Component(Component&& other) noexcept
+		{
+			m_pParentObject = other.m_pParentObject;
+			other.m_pParentObject = nullptr;
+		}
+		Component& operator=(Component&& other)
+		{
+			m_pParentObject = other.m_pParentObject;
+			other.m_pParentObject = nullptr;
+			return *this;
+		}
 
 		//virtual void Start() = 0;
 		virtual void Update() = 0;

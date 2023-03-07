@@ -65,7 +65,7 @@ public:
 	{
 		if(m_InternalMap[getTypeId<T_Key>()] == nullptr)
 		{
-			m_InternalMap[getTypeId<T_Key>()] = value;
+			m_InternalMap[getTypeId<T_Key>()] = std::move(value);
 			return;
 		}
 		throw TypeAlreadyInMapException();

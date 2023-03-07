@@ -17,8 +17,16 @@ namespace dae
 
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;
-		TextureComponent(TextureComponent&& other) = delete;
-		TextureComponent& operator=(TextureComponent&& other) = delete;
+		TextureComponent(TextureComponent&& other)
+			:Component(std::move(other))
+		{
+			m_Texture = other.m_Texture;
+		}
+		TextureComponent& operator=(TextureComponent&& other)
+		{
+			Component::operator=(std::move(other));
+			m_Texture = other.m_Texture;
+		}
 
 		//virtual void Start() override;
 		virtual void Update() override;

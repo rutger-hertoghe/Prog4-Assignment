@@ -4,6 +4,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+
+#include <thread>
+
 #include "Minigin.h"
 
 #include <iostream>
@@ -70,7 +73,7 @@ dae::Minigin::Minigin(const std::string &dataPath)
 
 	ResourceManager::GetInstance().Init(dataPath);
 
-	Time::GetInstance();
+	Time::GetInstance().SetDesiredFPS(20.f);
 }
 
 dae::Minigin::~Minigin()
@@ -90,12 +93,17 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	bool doContinue = true;
+
 	while (doContinue)
 	{
 		Time::GetInstance().Update();
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
-		// TODO: add sleep_for to reduce CPU load
+
+		// TODO: sleeping work for low frame rates, but once I get in the desired range, he seems to not want to sleep anymore and I don't understand why
+		// Floating point error??? Probably not
+		auto sleepyFor(Time::GetInstance().GetRemainingSleepTime());
+		std::this_thread::sleep_for(sleepyFor);
 	}
 }

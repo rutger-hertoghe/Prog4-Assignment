@@ -16,16 +16,6 @@ FPSCounterComponent::FPSCounterComponent(GameObject* pParent, float loggingRate)
 	, m_FramesSinceLastLog(0)
 {
 	m_pLinkedText = pParent->RequireComponent<TextComponent>();
-
-
-	//m_pLinkedText = RequireComponent<TextComponent>();
-
-	//m_pLinkedText = pParent->GetComponent<TextComponent>();
-	//if (m_pLinkedText == nullptr)
-	//{
-	//	//std::cout << "Necessary text component not found! Automatically attaching TextComponent to object!\n";
-	//	m_pLinkedText = pParent->AddComponent<TextComponent>(new TextComponent(pParent));
-	//}
 }
 
 void FPSCounterComponent::Update()

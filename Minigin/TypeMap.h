@@ -65,7 +65,9 @@ public:
 	{
 		if(m_InternalMap[getTypeId<T_Key>()] == nullptr)
 		{
-			m_InternalMap[getTypeId<T_Key>()] = std::move(value);
+			// TODO: problem lies here I presume: unique_ptr doesn't have a copy constructor for obvious reasons
+			//m_InternalMap.insert(std::make_pair(getTypeId<T_Key>(), std::move(value)));
+			m_InternalMap[getTypeId<T_Key>()] = value;
 			return;
 		}
 		throw TypeAlreadyInMapException();

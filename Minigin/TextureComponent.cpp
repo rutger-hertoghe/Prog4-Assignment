@@ -24,7 +24,7 @@ void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
 
-	const auto pos = GetParentObject()->GetTransform().GetPosition();
+	const auto pos = GetParentObject()->GetWorldTransform().GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 }
 
@@ -33,8 +33,7 @@ void dae::TextureComponent::SetTexture(const std::string& filename)
 	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-void dae::TextureComponent::SetTexture(std::shared_ptr<Texture2D> pTexture)
+void dae::TextureComponent::SetTexture(const std::shared_ptr<Texture2D>& pTexture)
 {
-	// TODO: some bad stuff here?
 	m_Texture = pTexture;
 }

@@ -16,6 +16,7 @@ void Scene::Add(std::shared_ptr<GameObject> object)
 
 void Scene::Remove(std::shared_ptr<GameObject> object)
 {
+	// TODO: regarding Remove in game objects todo, this is the related code
 	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
 }
 
@@ -26,6 +27,7 @@ void Scene::RemoveAll()
 
 void Scene::Update()
 {
+	// TODO: shared owne
 	for(auto& object : m_objects)
 	{
 		object->Update();

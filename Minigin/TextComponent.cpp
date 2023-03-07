@@ -7,7 +7,7 @@
 #include "Texture2D.h"
 #include "TextureComponent.h"
 
-class TextureComponentNotFound{};
+//class TextureComponentNotFound{};
 
 dae::TextComponent::TextComponent(GameObject* pParent, const std::string& text, std::shared_ptr<Font> font)
 	: Component(pParent)
@@ -15,13 +15,7 @@ dae::TextComponent::TextComponent(GameObject* pParent, const std::string& text, 
 	, m_Text{text}
 	, m_Font(std::move(font))
 {
-	m_pTextureComponent = GetParentObject()->GetComponent<TextureComponent>();
-	// TODO: use assert instead of throw?
-	if(m_pTextureComponent == nullptr)
-	{
-		std::cerr << "Necessary texture component not found!\n";
-		throw TextureComponentNotFound();
-	}
+	m_pTextureComponent = pParent->RequireComponent<TextureComponent>();
 }
 
 void dae::TextComponent::Update()
@@ -41,7 +35,7 @@ void dae::TextComponent::Update()
 		}
 		SDL_FreeSurface(surf);
 		m_pTextureComponent->SetTexture(std::make_shared<Texture2D>(texture));
-		//m_TextTexture = std::make_shared<Texture2D>(texture);
+
 		m_NeedsUpdate = false;
 	}
 }

@@ -5,10 +5,16 @@ namespace dae
 {
 	class TextComponent;
 
-	class FPSCounterComponent : public Component
+	class FPSCounterComponent final : public Component
 	{
 	public:
 		explicit FPSCounterComponent(GameObject* pParent, float loggingRate);
+		virtual ~FPSCounterComponent() override = default;
+
+		FPSCounterComponent(const FPSCounterComponent& other) = delete;
+		FPSCounterComponent& operator=(const FPSCounterComponent& other) = delete;
+		FPSCounterComponent(FPSCounterComponent&& other) = delete;
+		FPSCounterComponent& operator=(FPSCounterComponent&& other) = delete;
 
 		void Update() override;
 

@@ -25,7 +25,7 @@ namespace dae
 		void Render() const;
 
 		void SetTexture(const std::string& filename);
-		void SetTexture(std::shared_ptr<Texture2D> pTexture);
+		void SetTexture(const std::shared_ptr<Texture2D>& pTexture);
 
 	private:
 		std::shared_ptr<Texture2D> m_Texture{};

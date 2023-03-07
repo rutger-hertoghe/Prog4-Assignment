@@ -20,7 +20,7 @@ public:
 		return m_InternalMap.begin();
 	}
 
-	const_iterator end() const // TODO: Why can't I forward declare this? Figure this out!
+	const_iterator end() const // TODO: QUESTION Why can't I forward declare this? Figure this out!
 	{
 		return m_InternalMap.end();
 	}

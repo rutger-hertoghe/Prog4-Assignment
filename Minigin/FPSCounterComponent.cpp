@@ -6,7 +6,7 @@
 
 using namespace dae;
 
-class TextComponentNotFound{};
+//class TextComponentNotFound{};
 
 FPSCounterComponent::FPSCounterComponent(GameObject* pParent, float loggingRate)
 	: Component(pParent)
@@ -15,13 +15,17 @@ FPSCounterComponent::FPSCounterComponent(GameObject* pParent, float loggingRate)
 	, m_TimeSinceLastLog(0.f)
 	, m_FramesSinceLastLog(0)
 {
-	m_pLinkedText = GetParentObject()->GetComponent<TextComponent>();
-	// TODO: use assert instead of throw?
-	if (m_pLinkedText == nullptr)
-	{
-		std::cerr << "Necessary text component not found!\n";
-		throw TextComponentNotFound();
-	}
+	m_pLinkedText = pParent->RequireComponent<TextComponent>();
+
+
+	//m_pLinkedText = RequireComponent<TextComponent>();
+
+	//m_pLinkedText = pParent->GetComponent<TextComponent>();
+	//if (m_pLinkedText == nullptr)
+	//{
+	//	//std::cout << "Necessary text component not found! Automatically attaching TextComponent to object!\n";
+	//	m_pLinkedText = pParent->AddComponent<TextComponent>(new TextComponent(pParent));
+	//}
 }
 
 void FPSCounterComponent::Update()

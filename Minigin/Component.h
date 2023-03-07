@@ -22,11 +22,11 @@ namespace dae
 		virtual void Update() = 0;
 
 	protected:
-		explicit Component(GameObject* pParentObject)
-			: m_pParentObject(pParentObject)
+		explicit Component(GameObject* pParent)
+			: m_pParentObject(pParent)
 		{}
 
-		GameObject* GetParentObject() const
+		[[nodiscard]] GameObject* GetParentObject() const
 		{
 			return m_pParentObject;
 		}

@@ -1,7 +1,4 @@
 #pragma once
-#include <memory>
-#include <string>
-
 #include "GameObject.h"
 
 namespace dae
@@ -26,7 +23,7 @@ namespace dae
 			: m_pParentObject(pParent)
 		{}
 
-		[[nodiscard]] GameObject* GetParentObject() const
+		[[nodiscard]] GameObject* GetOwner() const
 		{
 			return m_pParentObject;
 		}

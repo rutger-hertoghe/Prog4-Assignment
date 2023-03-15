@@ -1,14 +1,23 @@
 #include "GameObject.h"
 
-#include <string>
 #include <ranges>
 
-#include "ResourceManager.h"
-#include "Renderer.h"
 #include "Component.h"
 #include "TextureComponent.h"
+#include "Transform.h"
+#include "TransformComponent.h"
 
 using namespace dae;
+
+dae::GameObject::GameObject()
+	: GameObject(Transform{})
+{}
+
+dae::GameObject::GameObject(const Transform& transform)
+	: m_pParent(nullptr)
+{
+	RequireComponent<TransformComponent>(transform);
+}
 
 GameObject::~GameObject()
 {
@@ -39,39 +48,26 @@ void GameObject::Render() //const
 	}
 }
 
-void dae::GameObject::SetPosition(float x, float y)
-{
-	// TODO: update this to reflect world position being set
-	m_WorldTransform.SetPosition(x, y, 0.0f);
-}
-
-const Transform& GameObject::GetWorldTransform() const
-{
-	return m_WorldTransform;
-}
-
-const Transform& GameObject::GetLocalTransform() const
-{
-	return m_LocalTransform;
-}
-
-std::shared_ptr<GameObject> dae::GameObject::GetParent() const
+GameObject* dae::GameObject::GetParent() const
 {
 	return m_pParent;
 }
 
-void dae::GameObject::SetParent(const std::shared_ptr<GameObject>& pNewParent)
+void dae::GameObject::SetParent(GameObject* pNewParent)
 {
 	if(m_pParent)
 	{
-		m_pParent->RemoveChild(shared_from_this());
+		m_pParent->RemoveChild(this);
 	}
+
 	m_pParent = pNewParent;
+
 	if(pNewParent)
 	{
-		pNewParent->AddChild(shared_from_this());
+		pNewParent->AddChild(this);
 	}
 	// Update position, rotation & scale
+	// TODO: add transformation stuff
 }
 
 int dae::GameObject::GetChildCount() const
@@ -79,23 +75,28 @@ int dae::GameObject::GetChildCount() const
 	return static_cast<int>(m_pChildren.size());
 }
 
-shared_ptr<GameObject> dae::GameObject::GetChildAt(int idx)
+GameObject* dae::GameObject::GetChildAt(int idx) const
 {
 	return m_pChildren[idx];
 }
 
-void dae::GameObject::AddChild(const std::shared_ptr<GameObject>& pChild)
+std::vector<GameObject*> dae::GameObject::GetChildren()
+{
+	return m_pChildren;
+}
+
+void dae::GameObject::AddChild(GameObject* pChild)
 {
 	m_pChildren.emplace_back(pChild);
 }
 
-void dae::GameObject::RemoveChild(const std::shared_ptr<GameObject>& pChild)
+void dae::GameObject::RemoveChild(GameObject* pChild)
 {
 	// TODO: Child might be removed from parent but is still in scene!
 	// Remove from scene here if you want true deletion, or implement removal from parent objects in scene delete of object
 	// => Best decision: remove from scene
 	// Alternative: Remove is true removal, Detach() is a separate function that deletes the child from the parent, but doesn't remove it from scene
-	erase_if(m_pChildren, [&](const shared_ptr<GameObject>& pObj)
+	erase_if(m_pChildren, [&](GameObject* pObj)
 		{
 			return pChild == pObj;
 		});

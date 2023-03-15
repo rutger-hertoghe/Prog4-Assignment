@@ -6,12 +6,10 @@
 #include "Texture2D.h"
 #include "TransformComponent.h"
 
-dae::TextureComponent::TextureComponent(GameObject* pParent, const std::string& filename)
-	: TextureComponent(pParent)
+dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& filename)
+	: TextureComponent(pOwner)
 {
 	SetTexture(filename);
-	m_Width = m_Texture->GetSize().x;
-	m_Height = m_Texture->GetSize().y;
 }
 
 dae::TextureComponent::TextureComponent(GameObject* pParent)
@@ -38,11 +36,13 @@ void dae::TextureComponent::Render() const
 void dae::TextureComponent::SetTexture(const std::string& filename)
 {
 	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
+	SetSize(m_Texture->GetSize().x, m_Texture->GetSize().y);
 }
 
 void dae::TextureComponent::SetTexture(const std::shared_ptr<Texture2D>& pTexture)
 {
 	m_Texture = pTexture;
+	SetSize(m_Texture->GetSize().x, m_Texture->GetSize().y);
 }
 
 void dae::TextureComponent::SetSize(int width, int height)

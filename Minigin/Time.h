@@ -1,7 +1,8 @@
 #pragma once
 #include <chrono>
+#include "Singleton.h"
 
-class Time final
+class Time final : public dae::Singleton<Time>
 {
 public:
 	void Update();
@@ -13,6 +14,7 @@ public:
 	[[nodiscard]] std::chrono::duration<float> GetRemainingSleepTime() const;
 
 private:
+	friend dae::Singleton<Time>;
 	Time();
 	
 	std::chrono::time_point<std::chrono::high_resolution_clock> m_Start;

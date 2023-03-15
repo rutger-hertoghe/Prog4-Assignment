@@ -10,6 +10,32 @@ namespace dae
 	class TransformComponent final : public Component
 	{
 	public:
+		explicit TransformComponent(GameObject* pOwner, const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f);
+		explicit TransformComponent(GameObject* pOwner, const Transform& transform);
+
+		virtual void Update() override;
+
+		void SetLocalPosition(const glm::vec2& position);
+
+		[[nodiscard]] const glm::vec2& GetWorldPosition();
+
+	private:
+
+		Transform m_LocalTransform;
+		Transform m_WorldTransform;
+
+		bool m_IsDirty;
+
+		void SetDirty();
+
+		void UpdateWorldTransform();
+	};
+
+
+
+	/*class TransformComponent final : public Component
+	{
+	public:
 		explicit TransformComponent(GameObject* pParent, const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f, const glm::vec2& scale = { 1.f, 1.f });
 		explicit TransformComponent(GameObject* pParent, const Transform& transform);
 
@@ -39,5 +65,5 @@ namespace dae
 		bool m_IsDirty;
 
 		void SetDirty();
-	};
+	};*/
 }

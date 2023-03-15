@@ -12,5 +12,5 @@ dae::MoveComponent::MoveComponent(GameObject* pOwner, const glm::vec2& velocity)
 void dae::MoveComponent::Update()
 {
 	const float deltaTime{ Time::GetInstance().GetElapsed() };
-	m_Transform->AddToLocalPosition(m_Velocity * deltaTime);
+	m_Transform->SetLocalPosition(m_Transform->GetWorldPosition() + m_Velocity * deltaTime);
 }

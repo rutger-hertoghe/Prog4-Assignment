@@ -11,7 +11,7 @@ namespace dae
 	class TextureComponent final : public Component
 	{
 	public:
-		explicit TextureComponent(GameObject* pParent, const std::string& filename);
+		explicit TextureComponent(GameObject* pOwner, const std::string& filename);
 		explicit TextureComponent(GameObject* pParent);
 
 		virtual ~TextureComponent() override = default;

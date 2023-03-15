@@ -3,12 +3,21 @@
 
 namespace dae
 {
-	// TODO: POTENTIAL ISSUE: in fact I have duplicate data here
+	struct Transform final
+	{
+		explicit Transform(const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f);
+
+		glm::vec2 m_Position;
+		float m_Rotation;
+	};
+
+
+	// TODO: POTENTIAL ISSUE: in fact I have duplicate data here (below)
 	// Scale, position & rotation are encoded both in the matrix and separate members.
 	// While a matrix implementation felt 'correct', it might affect performance due to the costly atan2f operation
 	// everytime the matrix gets changed.
 
-	class Transform final
+	/*class Transform final
 	{
 	public:
 		explicit Transform(const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f, const glm::vec2& scale = {1.f, 1.f})
@@ -49,5 +58,5 @@ namespace dae
 
 		void RecalculateMatrix();
 		void ExtractCorrectValuesFromMatrix();
-	};
+	};*/
 }

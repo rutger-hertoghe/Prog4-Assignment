@@ -13,7 +13,7 @@ namespace dae
 	class Texture2D;
 	class Component;
 	class TransformComponent;
-	class Transform;
+	struct Transform;
 
 	class GameObject final
 	{

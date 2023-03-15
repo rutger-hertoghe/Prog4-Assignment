@@ -19,8 +19,8 @@ namespace dae
 		virtual void Update() = 0;
 
 	protected:
-		explicit Component(GameObject* pParent)
-			: m_pParentObject(pParent)
+		explicit Component(GameObject* pOwner)
+			: m_pParentObject(pOwner)
 		{}
 
 		[[nodiscard]] GameObject* GetOwner() const

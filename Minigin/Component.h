@@ -19,16 +19,16 @@ namespace dae
 		virtual void Update() = 0;
 
 	protected:
-		explicit Component(GameObject* pOwner)
-			: m_pParentObject(pOwner)
+		explicit Component(GameObject* pGameObject)
+			: m_pGameObject(pGameObject)
 		{}
 
-		[[nodiscard]] GameObject* GetOwner() const
+		[[nodiscard]] GameObject* GetGameObject() const
 		{
-			return m_pParentObject;
+			return m_pGameObject;
 		}
 
 	private:
-		GameObject* m_pParentObject;
+		GameObject* m_pGameObject;
 	};
 }

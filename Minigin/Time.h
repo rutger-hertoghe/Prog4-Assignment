@@ -9,6 +9,7 @@ public:
 
 	void SetDesiredFPS(float fPS);
 
+	void Init();
 	[[nodiscard]] float GetElapsed() const;
 	[[nodiscard]] float GetTotal() const;
 	[[nodiscard]] std::chrono::duration<float> GetRemainingSleepTime() const;

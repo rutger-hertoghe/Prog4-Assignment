@@ -9,13 +9,13 @@
 
 //class TextureComponentNotFound{};
 
-dae::TextComponent::TextComponent(GameObject* pParent, const std::string& text, std::shared_ptr<Font> font)
-	: Component(pParent)
+dae::TextComponent::TextComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
+	: Component(pGameObject)
 	, m_NeedsUpdate{true}
 	, m_Text{text}
 	, m_Font(std::move(font))
 {
-	m_pTextureComponent = pParent->RequireComponent<TextureComponent>();
+	m_pTextureComponent = pGameObject->RequireComponent<TextureComponent>();
 }
 
 void dae::TextComponent::Update()

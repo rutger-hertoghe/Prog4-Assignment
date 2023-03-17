@@ -6,8 +6,8 @@
 #include "Texture2D.h"
 #include "TransformComponent.h"
 
-dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& filename)
-	: TextureComponent(pOwner)
+dae::TextureComponent::TextureComponent(GameObject* pGameObject, const std::string& filename)
+	: TextureComponent(pGameObject)
 {
 	SetTexture(filename);
 }
@@ -29,7 +29,7 @@ void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
 
-	const auto pos = m_TransformComponent->GetWorldPosition();
+	const auto pos = m_TransformComponent->GetWorldTransform().m_Position;
 	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
 }
 

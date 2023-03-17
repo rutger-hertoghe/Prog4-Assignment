@@ -4,10 +4,11 @@
 
 namespace dae
 {
+	// TODO: BIG SIX
 	class MoveComponent final : public Component
 	{
 	public:
-		explicit MoveComponent(GameObject* pOwner, const glm::vec2& velocity);
+		explicit MoveComponent(GameObject* pGameObject, const glm::vec2& velocity);
 
 		virtual void Update() override;
 

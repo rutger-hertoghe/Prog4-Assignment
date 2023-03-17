@@ -19,14 +19,14 @@
     <Filter Include="Source Files\Components\RenderingComponent">
       <UniqueIdentifier>{c4819c8b-8d3e-4145-997f-b37b4c642357}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\TransformComponents">
-      <UniqueIdentifier>{9d562a3b-585e-4b25-b2c9-f7601aced622}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Structure">
       <UniqueIdentifier>{c02506af-e094-490d-8e37-a598014974f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Structure\Graphic">
       <UniqueIdentifier>{607f9f6a-8073-490f-b1d9-149f56de26a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\MovementComponents">
+      <UniqueIdentifier>{9d562a3b-585e-4b25-b2c9-f7601aced622}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,17 +75,23 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Source Files\Components\RenderingComponent</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Source Files\Components\TransformComponents</Filter>
-    </ClInclude>
     <ClInclude Include="MoveComponent.h">
-      <Filter>Source Files\Components\TransformComponents</Filter>
+      <Filter>Source Files\Components\MovementComponents</Filter>
     </ClInclude>
     <ClInclude Include="TypeMap.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Source Files\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatorComponent.h">
+      <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerComponent.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,17 +137,23 @@
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Source Files\Components\RenderingComponent</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Source Files\Components\TransformComponents</Filter>
-    </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
-      <Filter>Source Files\Components\TransformComponents</Filter>
+      <Filter>Source Files\Components\MovementComponents</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
     <ClCompile Include="TypeMap.cpp">
       <Filter>Source Files\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatorComponent.cpp">
+      <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

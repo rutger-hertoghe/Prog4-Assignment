@@ -47,8 +47,8 @@ namespace dae
 
 		// PARENTING & CHILDRENING (?)
 		[[nodiscard]] GameObject* GetParent() const;
-		// TODO: Add option to keep world position
-		void SetParent(GameObject* pNewParent);
+		void SetParent(GameObject* pNewParent, bool keepWorldPosition = true);
+		void DetachFromParent(bool keepWorldPosition = true);
 
 		[[nodiscard]] int GetChildCount() const;
 		[[nodiscard]] GameObject* GetChildAt(int idx) const;

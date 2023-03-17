@@ -21,6 +21,11 @@ void Time::SetDesiredFPS(float fPS)
 	m_MaxSleepTime = std::chrono::duration<float>(second / fPS);
 }
 
+void Time::Init()
+{
+	m_LastPoint = std::chrono::high_resolution_clock::now();
+}
+
 float Time::GetElapsed() const
 {
 	return m_DeltaTime;

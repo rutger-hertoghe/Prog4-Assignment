@@ -24,7 +24,7 @@ namespace dae
 		// BIG SIX
 		explicit GameObject();
 		explicit GameObject(const Transform& transform);
-		~GameObject();
+		~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -58,7 +58,7 @@ namespace dae
 		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
 	private:
-		std::unordered_map<const type_info*, Component*> m_pComponents;
+		std::unordered_map<const type_info*, std::unique_ptr<Component>> m_pComponents;
 
 		GameObject* m_pParent;
 		std::vector<GameObject*> m_pChildren;
@@ -78,7 +78,7 @@ namespace dae
 	{
 		if(m_pComponents.contains(&typeid(T_Component)))
 		{
-			return static_cast<T_Component*>(m_pComponents.at(&typeid(T_Component)));
+			return static_cast<T_Component*>(m_pComponents.at(&typeid(T_Component)).get());
 		}
 		std::cerr << typeid(T_Component).name() << " was not found in GameObject!\n";
 		return nullptr;
@@ -86,16 +86,17 @@ namespace dae
 
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::AddComponent(Args... args)
-	{		 
+	{
+		// TODO: Add with [] as well? (suggestion Tanguy)
 		if(m_pComponents.contains(&typeid(T_Component)))
 		{
 			std::cerr << "Component already exists in map\n";
-			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)]);
+			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)].get());
 		}
 
-		auto pComponent = new T_Component(this, args...);
-		m_pComponents.insert(std::make_pair(&typeid(T_Component), pComponent));
-		return pComponent;
+		//auto pComponent = new T_Component(this, args...);
+		m_pComponents.insert(std::make_pair(&typeid(T_Component), std::make_unique<T_Component>(this, args...)));
+		return GetComponent<T_Component>();
 	}
 
 	template<typename T_Component>
@@ -115,7 +116,7 @@ namespace dae
 	{
 		if(m_pComponents.contains(&typeid(T_Component)))
 		{
-			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)]);
+			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)].get());
 		}
 		std::cout << "Automatically attaching " << typeid(T_Component).name() << " to object!\n";
 		return AddComponent<T_Component>(args...);

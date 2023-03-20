@@ -1,7 +1,10 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "TypeMap.h"
+//#include "TypeMap.h"
+//#include "OwningTypeMap.h"
+#include <vector>
+#include <unordered_map>
 #include <stdexcept>
 #include <iostream>
 #include "Component.h"
@@ -55,7 +58,7 @@ namespace dae
 		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
 	private:
-		TypeMap<Component*> m_pComponents;
+		std::unordered_map<const type_info*, Component*> m_pComponents;
 
 		GameObject* m_pParent;
 		std::vector<GameObject*> m_pChildren;
@@ -70,31 +73,35 @@ namespace dae
 	// | TEMPLATED FUNCTION DEFINITIONS |
 	// |--------------------------------|
 
-	template <typename T_Component>
-	T_Component* GameObject::GetComponent() //const
+	template<typename T_Component>
+	T_Component* GameObject::GetComponent()
 	{
-		try
+		if(m_pComponents.contains(&typeid(T_Component)))
 		{
-			auto pComponent{ m_pComponents.at<T_Component>() };
-			return static_cast<T_Component*>(pComponent);
+			return static_cast<T_Component*>(m_pComponents.at(&typeid(T_Component)));
 		}
-		catch(TypeNotInMapException&)
-		{
-			return nullptr;
-		}
+		std::cerr << typeid(T_Component).name() << " was not found in GameObject!\n";
+		return nullptr;
 	}
 
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::AddComponent(Args... args)
-	{
+	{		 
+		if(m_pComponents.contains(&typeid(T_Component)))
+		{
+			std::cerr << "Component already exists in map\n";
+			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)]);
+		}
+
 		auto pComponent = new T_Component(this, args...);
-		m_pComponents.emplace<T_Component>(pComponent);
-		return static_cast<T_Component*>(pComponent);
+		m_pComponents.insert(std::make_pair(&typeid(T_Component), pComponent));
+		return pComponent;
 	}
 
 	template<typename T_Component>
 	bool GameObject::RemoveComponent()
 	{
+		// TODO: can probably skip over GetComponent here
 		auto pComponent = GetComponent<T_Component>();
 		if (pComponent == nullptr) return false;
 
@@ -106,14 +113,11 @@ namespace dae
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::RequireComponent(Args... args)
 	{
-		auto pRequiredComponent = GetComponent<T_Component>();
-		if (pRequiredComponent == nullptr)
+		if(m_pComponents.contains(&typeid(T_Component)))
 		{
-			// TODO: remove because of cluttering & lack of clarity in console?
-			std::cout << "Necessary component not found! Automatically attaching " << typeid(T_Component).name() <<" to object!\n";
-
-			pRequiredComponent = AddComponent<T_Component>(args...);
+			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)]);
 		}
-		return pRequiredComponent;
+		std::cout << "Automatically attaching " << typeid(T_Component).name() << " to object!\n";
+		return AddComponent<T_Component>(args...);
 	}
 }

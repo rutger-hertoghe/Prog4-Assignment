@@ -6,19 +6,21 @@
 #include <iostream>
 #include "Component.h"
 
-#include "Transform.h"
+//#include "TransformComponent.h"
 
 namespace dae
 {
-	using namespace std;
 	class Texture2D;
 	class Component;
+	class TransformComponent;
+	struct Transform;
 
-	class GameObject final : public std::enable_shared_from_this<GameObject> // inherit to enable 'shared_from_this' to set children
+	class GameObject final
 	{
 	public:
 		// BIG SIX
-		GameObject() = default;
+		explicit GameObject();
+		explicit GameObject(const Transform& transform);
 		~GameObject();
 
 		GameObject(const GameObject& other) = delete;
@@ -30,10 +32,6 @@ namespace dae
 		void Update();
 		void Render(); //const;
 
-		void SetPosition(float x, float y);
-		[[nodiscard]] const Transform& GetLocalTransform() const;
-		[[nodiscard]] const Transform& GetWorldTransform() const;
-
 		// COMPONENTS
 		template<typename T_Component>
 		T_Component* GetComponent(); //const; // TODO: QUESTION why does setting const here break my code?
@@ -42,33 +40,28 @@ namespace dae
 		T_Component* AddComponent(Args... args);
 
 		template<typename T_Component>
-		T_Component* AddComponent(Component* pComponent);
-
-		template<typename T_Component>
 		bool RemoveComponent();
 
-		template<typename T_Component>
-		T_Component* RequireComponent();
+		template<typename T_Component, typename... Args, typename = std::enable_if_t<std::is_constructible_v<T_Component, GameObject*, Args...>>>
+		T_Component* RequireComponent(Args... args);
 
 		// PARENTING & CHILDRENING (?)
-		[[nodiscard]] shared_ptr<GameObject> GetParent() const;
-		void SetParent(const shared_ptr<GameObject>& pParentObj);
+		[[nodiscard]] GameObject* GetParent() const;
+		void SetParent(GameObject* pNewParent, bool keepWorldPosition = true);
+		void DetachFromParent(bool keepWorldPosition = true);
 
 		[[nodiscard]] int GetChildCount() const;
-		[[nodiscard]] shared_ptr<GameObject> GetChildAt(int idx);
+		[[nodiscard]] GameObject* GetChildAt(int idx) const;
+		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
 	private:
-		Transform m_LocalTransform{};
-		Transform m_WorldTransform{};
-
 		TypeMap<Component*> m_pComponents;
 
-		shared_ptr<GameObject> m_pParent;
-		// TODO: why shared_ptr's here? Now children are shared with scene, but could be handled within gameObjects?
-		vector<shared_ptr<GameObject>> m_pChildren;
+		GameObject* m_pParent;
+		std::vector<GameObject*> m_pChildren;
 
-		void AddChild(const shared_ptr<GameObject>& pChild);
-		void RemoveChild(const shared_ptr<GameObject>& pChild);
+		void AddChild(GameObject* pChild);
+		void RemoveChild(GameObject* pChild);
 	};
 
 
@@ -87,16 +80,8 @@ namespace dae
 		}
 		catch(TypeNotInMapException&)
 		{
-			std::cerr << "GameObject does not have specified component attached!\n";
 			return nullptr;
 		}
-	}
-
-	template<typename T_Component>
-	T_Component* GameObject::AddComponent(Component * pComponent)
-	{
-		m_pComponents.emplace<T_Component>(pComponent);
-		return static_cast<T_Component*>(pComponent);
 	}
 
 	template<typename T_Component, typename... Args, typename>
@@ -118,15 +103,16 @@ namespace dae
 		return m_pComponents.erase<T_Component>();
 	}
 
-	template<typename T_Component>
-	T_Component* GameObject::RequireComponent()
+	template<typename T_Component, typename... Args, typename>
+	T_Component* GameObject::RequireComponent(Args... args)
 	{
 		auto pRequiredComponent = GetComponent<T_Component>();
 		if (pRequiredComponent == nullptr)
 		{
 			// TODO: remove because of cluttering & lack of clarity in console?
-			std::cout << "Necessary text component not found! Automatically attaching " << typeid(T_Component).name() <<" to object!\n";
-			pRequiredComponent = AddComponent<T_Component>(new T_Component(this));
+			std::cout << "Necessary component not found! Automatically attaching " << typeid(T_Component).name() <<" to object!\n";
+
+			pRequiredComponent = AddComponent<T_Component>(args...);
 		}
 		return pRequiredComponent;
 	}

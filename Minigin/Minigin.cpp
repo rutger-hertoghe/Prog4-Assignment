@@ -17,6 +17,8 @@
 #include "ResourceManager.h"
 #include "Time.h"
 
+#include "DataCollector.h"
+
 SDL_Window* g_window{};
 
 void PrintSDLVersion()
@@ -73,7 +75,7 @@ dae::Minigin::Minigin(const std::string &dataPath)
 
 	ResourceManager::GetInstance().Init(dataPath);
 
-	Time::GetInstance().SetDesiredFPS(20.f);
+	Time::GetInstance().SetDesiredFPS(120.f);
 }
 
 dae::Minigin::~Minigin()
@@ -91,17 +93,19 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& time = Time::GetInstance();
 
 	bool doContinue = true;
 
+	time.Init();
 	while (doContinue)
 	{
-		Time::GetInstance().Update();
+		time.Update();
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
 
-		// TODO: sleeping work for low frame rates, but once I get in the desired range, he seems to not want to sleep anymore and I don't understand why
+		// TODO: QUESTION sleeping works for low frame rates, but once I get in the desired range, he seems to not want to sleep anymore and I don't understand why
 		// Floating point error??? Probably not
 		auto sleepyFor(Time::GetInstance().GetRemainingSleepTime());
 		std::this_thread::sleep_for(sleepyFor);

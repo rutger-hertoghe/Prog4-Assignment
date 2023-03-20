@@ -1,7 +1,4 @@
 #pragma once
-#include <memory>
-#include <string>
-
 #include "GameObject.h"
 
 namespace dae
@@ -22,16 +19,16 @@ namespace dae
 		virtual void Update() = 0;
 
 	protected:
-		explicit Component(GameObject* pParent)
-			: m_pParentObject(pParent)
+		explicit Component(GameObject* pGameObject)
+			: m_pGameObject(pGameObject)
 		{}
 
-		[[nodiscard]] GameObject* GetParentObject() const
+		[[nodiscard]] GameObject* GetGameObject() const
 		{
-			return m_pParentObject;
+			return m_pGameObject;
 		}
 
 	private:
-		GameObject* m_pParentObject;
+		GameObject* m_pGameObject;
 	};
 }

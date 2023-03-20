@@ -3,24 +3,18 @@
 
 namespace dae
 {
-	class Transform final
+	// TODO: consider turning this into a class
+	struct Transform final
 	{
-	public:
-		// POSITION
-		const glm::vec3& GetPosition() const;
-		void SetPosition(float x, float y, float z);
+		explicit Transform(float x, float y, float rotation = 0.f);
+		explicit Transform(const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f);
 
-		// ROTATION
-		const glm::vec3& GetRotation() const;
-		void SetRotation(float x, float y, float z);
+		glm::vec2 m_Position;
+		float m_Rotation;
 
-		// SCALE
-		const glm::vec3& GetScale() const;
-		void SetScale(float x, float y, float z);
+		glm::mat3x3 m_TransformMatrix;
 
-	private:
-		glm::vec3 m_Position;
-		glm::vec3 m_Scale;
-		glm::vec3 m_Rotation;
+		void ConstructMatrix();
+		void ExtractDataFromMatrix();
 	};
 }

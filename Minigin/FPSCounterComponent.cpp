@@ -8,14 +8,14 @@ using namespace dae;
 
 //class TextComponentNotFound{};
 
-FPSCounterComponent::FPSCounterComponent(GameObject* pParent, float loggingRate)
-	: Component(pParent)
+FPSCounterComponent::FPSCounterComponent(GameObject* pGameObject, float loggingRate)
+	: Component(pGameObject)
 	, m_TimePerLog(loggingRate)
 	, m_pLinkedText(nullptr)
 	, m_TimeSinceLastLog(0.f)
 	, m_FramesSinceLastLog(0)
 {
-	m_pLinkedText = pParent->RequireComponent<TextComponent>();
+	m_pLinkedText = pGameObject->RequireComponent<TextComponent>();
 }
 
 void FPSCounterComponent::Update()

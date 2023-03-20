@@ -4,8 +4,11 @@
 #include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #include "imgui_impl_sdl2.h"
+
 #include "SceneManager.h"
 #include "Texture2D.h"
+
+
 
 int GetOpenGLDriverIndex()
 {
@@ -36,6 +39,8 @@ void dae::Renderer::Init(SDL_Window* window)
 	ImGui_ImplOpenGL2_Init();
 
 	ImGui::SetNextWindowPos({ 0,0 } );
+
+	m_pPlots = std::make_unique<ThrowawayPlotsClass>(10'000'000, 50);
 }
 
 void dae::Renderer::Render() const
@@ -49,8 +54,10 @@ void dae::Renderer::Render() const
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+	
+	m_pPlots->Render();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	

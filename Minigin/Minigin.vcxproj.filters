@@ -31,6 +31,9 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{a9c0e7cf-2799-478e-a9ac-87d4657ce175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TrashTheCache">
+      <UniqueIdentifier>{8cdff915-3039-4410-8d63-01c1c61475fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -120,6 +123,15 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="DataCollector.h">
+      <Filter>Source Files\TrashTheCache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowawayPlotsClass.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -202,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowawayPlotsClass.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

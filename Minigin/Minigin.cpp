@@ -17,6 +17,8 @@
 #include "ResourceManager.h"
 #include "Time.h"
 
+#include "DataCollector.h"
+
 SDL_Window* g_window{};
 
 void PrintSDLVersion()

@@ -17,7 +17,7 @@ dae::TextureComponent::TextureComponent(GameObject* pParent)
 	, m_Width{0}
 	, m_Height{0}
 {
-	m_TransformComponent = pParent->RequireComponent<TransformComponent>();
+	pParent->RequireComponent<TransformComponent>();
 }
 
 void dae::TextureComponent::Update()
@@ -28,9 +28,11 @@ void dae::TextureComponent::Update()
 void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
-
-	const auto pos = m_TransformComponent->GetWorldTransform().m_Position;
-	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
+	if(const auto pTransformComponent{GetGameObject()->GetComponent<TransformComponent>()})
+	{
+		const auto pos = pTransformComponent->GetWorldTransform().m_Position;
+		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
+	}
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filename)

@@ -80,7 +80,6 @@ namespace dae
 		{
 			return static_cast<T_Component*>(m_pComponents.at(&typeid(T_Component)).get());
 		}
-		std::cerr << typeid(T_Component).name() << " was not found in GameObject!\n";
 		return nullptr;
 	}
 
@@ -94,7 +93,6 @@ namespace dae
 			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)].get());
 		}
 
-		//auto pComponent = new T_Component(this, args...);
 		m_pComponents.insert(std::make_pair(&typeid(T_Component), std::make_unique<T_Component>(this, args...)));
 		return GetComponent<T_Component>();
 	}
@@ -102,13 +100,9 @@ namespace dae
 	template<typename T_Component>
 	bool GameObject::RemoveComponent()
 	{
-		// TODO: can probably skip over GetComponent here
-		auto pComponent = GetComponent<T_Component>();
-		if (pComponent == nullptr) return false;
-
-		delete pComponent;
-
-		return m_pComponents.erase<T_Component>();
+		// TODO: ISSUE remove component deletes the component from the gameobject, but other dependent components still try to access it!
+		const auto deletedElements{ m_pComponents.erase(&typeid(T_Component)) };
+		return (deletedElements == 1 ? true : false);
 	}
 
 	template<typename T_Component, typename... Args, typename>

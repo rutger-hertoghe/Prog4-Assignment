@@ -15,7 +15,7 @@ dae::TextComponent::TextComponent(GameObject* pGameObject, const std::string& te
 	, m_Text{text}
 	, m_Font(std::move(font))
 {
-	pGameObject->RequireComponent<TextureComponent>();
+	m_pTextureComponent = pGameObject->RequireComponent<TextureComponent>();
 }
 
 void dae::TextComponent::Update()
@@ -34,9 +34,10 @@ void dae::TextComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		if(const auto pTextureComponent{GetGameObject()->GetComponent<TextureComponent>()})
+
+		if(m_pTextureComponent)
 		{
-			pTextureComponent->SetTexture(std::make_shared<Texture2D>(texture));
+			m_pTextureComponent->SetTexture(std::make_shared<Texture2D>(texture));
 		}
 
 		m_NeedsUpdate = false;

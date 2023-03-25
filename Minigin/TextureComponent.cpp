@@ -17,7 +17,7 @@ dae::TextureComponent::TextureComponent(GameObject* pParent)
 	, m_Width{0}
 	, m_Height{0}
 {
-	pParent->RequireComponent<TransformComponent>();
+	m_pTransformComponent = pParent->RequireComponent<TransformComponent>();
 }
 
 void dae::TextureComponent::Update()
@@ -28,9 +28,9 @@ void dae::TextureComponent::Update()
 void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
-	if(const auto pTransformComponent{GetGameObject()->GetComponent<TransformComponent>()})
+	if(m_pTransformComponent)
 	{
-		const auto pos = pTransformComponent->GetWorldTransform().m_Position;
+		const auto pos = m_pTransformComponent->GetWorldTransform().m_Position;
 		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
 	}
 }

@@ -22,6 +22,8 @@ namespace dae
 		const float m_TimePerLog;
 		float m_TimeSinceLastLog;
 		int m_FramesSinceLastLog;
+
+		TextComponent* m_pTextComponent;
 	};
 
 }

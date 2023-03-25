@@ -26,6 +26,8 @@ namespace dae
 		bool m_NeedsUpdate;
 		std::string m_Text;
 		std::shared_ptr<Font> m_Font;
+
+		TextureComponent* m_pTextureComponent;
 	};
 }
 

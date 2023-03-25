@@ -14,7 +14,7 @@ FPSCounterComponent::FPSCounterComponent(GameObject* pGameObject, float loggingR
 	, m_TimeSinceLastLog(0.f)
 	, m_FramesSinceLastLog(0)
 {
-	pGameObject->RequireComponent<TextComponent>();
+	m_pTextComponent = pGameObject->RequireComponent<TextComponent>();
 }
 
 void FPSCounterComponent::Update()
@@ -25,9 +25,9 @@ void FPSCounterComponent::Update()
 	if (m_TimeSinceLastLog < m_TimePerLog) return;
 	
 	const int fps{ static_cast<int>(static_cast<float>(m_FramesSinceLastLog) / m_TimePerLog) };
-	if (const auto pText{ GetGameObject()->GetComponent<TextComponent>() })
+	if (m_pTextComponent)
 	{
-		pText->SetText(std::to_string(fps) + "FPS");
+		m_pTextComponent->SetText(std::to_string(fps) + "FPS");
 	}
 	m_TimeSinceLastLog = 0.f;
 	m_FramesSinceLastLog = 0;

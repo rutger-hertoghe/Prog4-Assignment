@@ -4,6 +4,7 @@
 
 namespace dae
 {
+	class TransformComponent;
 	// TODO: BIG SIX
 	class MoveComponent final : public Component
 	{
@@ -14,5 +15,7 @@ namespace dae
 
 	private:
 		glm::vec2 m_Velocity;
+
+		TransformComponent* m_pTransformComponent;
 	};
 }

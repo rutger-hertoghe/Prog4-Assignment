@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FONT_H
+#define FONT_H
+
 #include <string>
 
 struct _TTF_Font;
@@ -23,3 +25,4 @@ namespace dae
 		unsigned int m_size;
 	};
 }
+#endif

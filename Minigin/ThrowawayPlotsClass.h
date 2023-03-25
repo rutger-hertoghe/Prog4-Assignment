@@ -1,4 +1,5 @@
-#pragma once
+#ifndef THROWAWAYPLOTCLASS_H
+#define THROWAWAYPLOTCLASS_H
 #include "imgui_plot.h"
 #include <vector>
 #include <memory>
@@ -35,3 +36,4 @@ private:
 
 	void UpdateConfig(ImGui::PlotConfig& config, const std::vector<float>& values);
 };
+#endif

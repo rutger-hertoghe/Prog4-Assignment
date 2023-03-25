@@ -1,7 +1,5 @@
 #include "Time.h"
 
-#include <iostream>
-
 Time::Time()
 {
 	m_Start = std::chrono::high_resolution_clock::now();

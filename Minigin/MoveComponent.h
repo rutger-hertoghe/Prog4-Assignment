@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MOVE_COMPONENT_H
+#define MOVE_COMPONENT_H
+
 #include <glm/glm.hpp>
 #include "Component.h"
 
@@ -19,3 +21,4 @@ namespace dae
 		TransformComponent* m_pTransformComponent;
 	};
 }
+#endif

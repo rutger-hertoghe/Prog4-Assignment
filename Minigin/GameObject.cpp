@@ -1,11 +1,11 @@
 #include "GameObject.h"
 
-#include <ranges>
-
 #include "Component.h"
 #include "TextureComponent.h"
 #include "Transform.h"
 #include "TransformComponent.h"
+
+#include <ranges>
 
 class NoParentError{};
 

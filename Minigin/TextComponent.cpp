@@ -6,6 +6,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include "TextureComponent.h"
+#include "GameObject.h"
 
 //class TextureComponentNotFound{};
 

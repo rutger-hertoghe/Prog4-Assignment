@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FPSCOUNTER_COMPONENT_H
+#define FPSCOUNTER_COMPONENT_H
+
 #include "Component.h"
 
 namespace dae
@@ -27,3 +29,4 @@ namespace dae
 	};
 
 }
+#endif

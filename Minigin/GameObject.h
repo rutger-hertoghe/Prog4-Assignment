@@ -1,15 +1,10 @@
-#pragma once
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 #include <memory>
-#include <string>
-//#include "TypeMap.h"
-//#include "OwningTypeMap.h"
 #include <vector>
 #include <unordered_map>
-#include <stdexcept>
 #include <iostream>
-#include "Component.h"
-
-//#include "TransformComponent.h"
 
 namespace dae
 {
@@ -116,3 +111,4 @@ namespace dae
 		return AddComponent<T_Component>(args...);
 	}
 }
+#endif

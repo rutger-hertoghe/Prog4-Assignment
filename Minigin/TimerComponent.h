@@ -1,7 +1,10 @@
-#pragma once
-#include <functional>
+#ifndef TIMER_COMPONENT_H
+#define TIMER_COMPONENT_H
 
 #include "Component.h"
+
+#include <functional>
+
 namespace dae
 {
 	// TODO: BIG SIX
@@ -20,3 +23,4 @@ namespace dae
 		bool m_IsActive;
 	};
 }
+#endif

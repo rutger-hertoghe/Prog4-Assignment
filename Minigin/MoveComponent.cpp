@@ -1,6 +1,7 @@
 #include "MoveComponent.h"
 #include "TransformComponent.h"
 #include "Time.h"
+#include "GameObject.h"
 
 dae::MoveComponent::MoveComponent(GameObject* pGameObject, const glm::vec2& velocity)
 	: Component{ pGameObject }

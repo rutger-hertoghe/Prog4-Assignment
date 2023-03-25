@@ -1,6 +1,7 @@
 #include "RotatorComponent.h"
 #include "TransformComponent.h"
 #include "Time.h"
+#include "GameObject.h"
 
 dae::RotatorComponent::RotatorComponent(GameObject* pGameObject, float angularSpeed)
 	: Component{ pGameObject }

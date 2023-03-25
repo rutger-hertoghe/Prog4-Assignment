@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRANSFORM_COMPONENT_H
+#define TRANSFORM_COMPONENT_H
 #include <glm/vec2.hpp>
 
 #include "Component.h"
@@ -49,3 +50,4 @@ namespace dae
 		void UpdateWorldTransform();
 	};
 }
+#endif

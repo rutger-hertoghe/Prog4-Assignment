@@ -1,5 +1,8 @@
-#pragma once
+#ifndef ROTATOR_COMPONENT_H
+#define ROTATOR_COMPONENT_H
+
 #include "Component.h"
+
 namespace dae
 {
 	class TransformComponent;
@@ -18,5 +21,4 @@ namespace dae
 		TransformComponent* m_pTransformComponent;
 	};
 }
-
-
+#endif

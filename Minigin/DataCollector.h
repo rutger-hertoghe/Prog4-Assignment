@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DATACOLLECTOR_H
+#define DATACOLLECTOR_H
+
 #include <vector>
 #include <chrono>
 #include <numeric>
@@ -194,3 +196,4 @@ inline void DataCollector<GameObject3DAlt>::DoManipulation(GameObject3DAlt& arra
 {
     arrayMember.ID *= 2;
 }
+#endif

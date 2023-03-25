@@ -1,5 +1,5 @@
-#pragma once
-#include "GameObject.h"
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 namespace dae
 {
@@ -32,3 +32,5 @@ namespace dae
 		GameObject* m_pGameObject;
 	};
 }
+
+#endif

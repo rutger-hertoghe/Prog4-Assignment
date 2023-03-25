@@ -1,12 +1,11 @@
 #include "FPSCounterComponent.h"
 #include "TextComponent.h"
-#include <string>
-
+#include "GameObject.h"
 #include "Time.h"
 
-using namespace dae;
+#include <string>
 
-//class TextComponentNotFound{};
+using namespace dae;
 
 FPSCounterComponent::FPSCounterComponent(GameObject* pGameObject, float loggingRate)
 	: Component(pGameObject)

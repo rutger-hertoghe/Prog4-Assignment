@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTURE_COMPONENT_H
+#define TEXTURE_COMPONENT_H
+#include <memory>
 #include <string>
 
 #include "Component.h"
@@ -38,5 +40,4 @@ namespace dae
 		TransformComponent* m_pTransformComponent;
 	};
 }
-
-
+#endif

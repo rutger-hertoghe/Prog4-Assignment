@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXT_COMPONENT_H
+#define TEXT_COMPONENT_H
+
 #include "Component.h"
 #include "ResourceManager.h"
 
@@ -30,5 +32,4 @@ namespace dae
 		TextureComponent* m_pTextureComponent;
 	};
 }
-
-
+#endif

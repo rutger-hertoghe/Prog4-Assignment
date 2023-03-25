@@ -7,11 +7,17 @@
 namespace dae
 {
 	class TransformComponent;
-	// TODO: BIG SIX
+
 	class MoveComponent final : public Component
 	{
 	public:
 		explicit MoveComponent(GameObject* pGameObject, const glm::vec2& velocity);
+		~MoveComponent() override = default;
+
+		MoveComponent(const MoveComponent& other) = delete;
+		MoveComponent& operator=(const MoveComponent& other) = delete;
+		MoveComponent(MoveComponent&& other) = delete;
+		MoveComponent& operator=(MoveComponent& other) = delete;
 
 		virtual void Update() override;
 

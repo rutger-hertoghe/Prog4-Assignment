@@ -16,7 +16,7 @@ namespace dae
 		explicit TextureComponent(GameObject* pGameObject, const std::string& filename);
 		explicit TextureComponent(GameObject* pParent);
 
-		virtual ~TextureComponent() override = default;
+		~TextureComponent() override = default;
 
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;

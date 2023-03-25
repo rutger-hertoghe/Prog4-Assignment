@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		explicit FPSCounterComponent(GameObject* pGameObject, float loggingRate);
-		virtual ~FPSCounterComponent() override = default;
+		~FPSCounterComponent() override = default;
 
 		FPSCounterComponent(const FPSCounterComponent& other) = delete;
 		FPSCounterComponent& operator=(const FPSCounterComponent& other) = delete;

@@ -13,7 +13,7 @@ namespace dae
 	{
 	public:
 		explicit TextComponent(GameObject* pGameObject, const std::string& text = "Text not set!", std::shared_ptr<Font> font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
-		virtual ~TextComponent() override = default;
+		~TextComponent() override = default;
 
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;

@@ -7,14 +7,19 @@
 
 namespace dae
 {
-	// TODO: BIG SIX
-	// TODO: clean up constructor stuff
 	class TransformComponent final : public Component
 	{
 	public:
 		explicit TransformComponent(GameObject* pGameObject, float x, float y, float rotation = 0.f);
 		explicit TransformComponent(GameObject* pGameObject, const glm::vec2& position = { 0.f, 0.f }, float rotation = 0.f);
 		explicit TransformComponent(GameObject* pGameObject, const Transform& transform);
+
+		~TransformComponent() override = default;
+
+		TransformComponent(const TransformComponent& other) = delete;
+		TransformComponent& operator=(const TransformComponent& other) = delete;
+		TransformComponent(TransformComponent&& other) = delete;
+		TransformComponent& operator=(TransformComponent&& other) = delete;
 
 		virtual void Update() override;
 		

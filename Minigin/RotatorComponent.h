@@ -10,8 +10,13 @@ namespace dae
 	class RotatorComponent final : public Component
 	{
 	public:
-		// TODO: BIG SIX
 		explicit RotatorComponent(GameObject* pGameObject, float angularSpeed);
+		~RotatorComponent() override = default;
+
+		RotatorComponent(const RotatorComponent* other) = delete;
+		RotatorComponent& operator=(const RotatorComponent* other) = delete;
+		RotatorComponent(RotatorComponent&& other) = delete;
+		RotatorComponent& operator=(RotatorComponent&& other) = delete;
 
 		virtual void Update() override;
 

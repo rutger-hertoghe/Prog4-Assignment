@@ -107,7 +107,7 @@ namespace dae
 		return GetComponent<T_Component>();
 	}
 
-	// Marks the component of the template argument type for deletion, along with all the components dependent on it.
+	// Marks the component specified by the template argument type for deletion, along with all the components dependent on it.
 	template<typename T_Component>
 	bool GameObject::RemoveComponent()
 	{
@@ -127,6 +127,12 @@ namespace dae
 		return false;
 	}
 
+	// Automatically adds a component of the type specified by the template argument to the GameObject
+	// if it is not found on the GameObject yet. Depending on the aforementioned, either returns the
+	// existing or the newly created component.
+	//
+	// SHOULD ALWAYS BE FOLLOWED BY ADDING COMPONENT IN WHICH IT IS CALLED TO THE LIST OF DEPENDENTS OF THE REQUIRED COMPONENT
+	// Use: "pRequiredComponent->AddDependentComponentType(&typeid(*this));"
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::RequireComponent(Args... args)
 	{

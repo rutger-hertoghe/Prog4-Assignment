@@ -8,6 +8,7 @@ dae::RotatorComponent::RotatorComponent(GameObject* pGameObject, float angularSp
 	, m_AngularSpeed{ angularSpeed }
 {
 	m_pTransformComponent = GetGameObject()->RequireComponent<TransformComponent>();
+	m_pTransformComponent->AddDependentComponentType(&typeid(*this));
 }
 
 void dae::RotatorComponent::Update()

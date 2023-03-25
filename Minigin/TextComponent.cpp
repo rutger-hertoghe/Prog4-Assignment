@@ -17,6 +17,7 @@ dae::TextComponent::TextComponent(GameObject* pGameObject, const std::string& te
 	, m_Font(std::move(font))
 {
 	m_pTextureComponent = pGameObject->RequireComponent<TextureComponent>();
+	m_pTextureComponent->AddDependentComponentType(&typeid(*this));
 }
 
 void dae::TextComponent::Update()

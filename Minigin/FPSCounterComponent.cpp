@@ -14,6 +14,7 @@ FPSCounterComponent::FPSCounterComponent(GameObject* pGameObject, float loggingR
 	, m_FramesSinceLastLog(0)
 {
 	m_pTextComponent = pGameObject->RequireComponent<TextComponent>();
+	m_pTextComponent->AddDependentComponentType(&typeid(*this));
 }
 
 void FPSCounterComponent::Update()

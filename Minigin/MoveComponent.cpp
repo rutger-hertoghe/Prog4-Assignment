@@ -8,6 +8,7 @@ dae::MoveComponent::MoveComponent(GameObject* pGameObject, const glm::vec2& velo
 	, m_Velocity{velocity}
 {
 	m_pTransformComponent =  pGameObject->RequireComponent<TransformComponent>();
+	m_pTransformComponent->AddDependentComponentType(&typeid(*this));
 }
 
 void dae::MoveComponent::Update()

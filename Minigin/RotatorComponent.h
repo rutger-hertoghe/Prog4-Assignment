@@ -14,7 +14,6 @@ namespace dae
 
 	private:
 		float m_AngularSpeed;
-		TransformComponent* m_Transform;
 	};
 }
 

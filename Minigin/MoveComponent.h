@@ -13,7 +13,6 @@ namespace dae
 		virtual void Update() override;
 
 	private:
-		TransformComponent* m_Transform;
 		glm::vec2 m_Velocity;
 	};
 }

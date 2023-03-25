@@ -6,11 +6,14 @@ dae::RotatorComponent::RotatorComponent(GameObject* pGameObject, float angularSp
 	: Component{ pGameObject }
 	, m_AngularSpeed{ angularSpeed }
 {
-	m_Transform = pGameObject->RequireComponent<TransformComponent>();
+	pGameObject->RequireComponent<TransformComponent>();
 }
 
 void dae::RotatorComponent::Update()
 {
 	const auto deltaTime = Time::GetInstance().GetElapsed();
-	m_Transform->Rotate(deltaTime * m_AngularSpeed);
+	if(const auto pTransform{GetGameObject()->GetComponent<TransformComponent>()})
+	{
+		pTransform->Rotate(deltaTime * m_AngularSpeed);
+	}
 }

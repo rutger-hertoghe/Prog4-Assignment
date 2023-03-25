@@ -19,8 +19,6 @@ namespace dae
 		void Update() override;
 
 	private:
-		TextComponent* m_pLinkedText;
-
 		const float m_TimePerLog;
 		float m_TimeSinceLastLog;
 		int m_FramesSinceLastLog;

@@ -6,11 +6,14 @@ dae::MoveComponent::MoveComponent(GameObject* pGameObject, const glm::vec2& velo
 	: Component{ pGameObject }
 	, m_Velocity{velocity}
 {
-	m_Transform = pGameObject->RequireComponent<TransformComponent>();
+	pGameObject->RequireComponent<TransformComponent>();
 }
 
 void dae::MoveComponent::Update()
 {
-	const float deltaTime{ Time::GetInstance().GetElapsed() };
-	m_Transform->Move(m_Velocity * deltaTime);
+	if(const auto pTransform = GetGameObject()->GetComponent<TransformComponent>())
+	{
+		const float deltaTime{ Time::GetInstance().GetElapsed() };
+		pTransform->Move(m_Velocity * deltaTime);
+	}
 }

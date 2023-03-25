@@ -32,7 +32,6 @@ namespace dae
 
 	private:
 		std::shared_ptr<Texture2D> m_Texture{};
-		TransformComponent* m_TransformComponent{};
 		int m_Width;
 		int m_Height;
 	};

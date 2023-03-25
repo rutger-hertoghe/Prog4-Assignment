@@ -1,11 +1,11 @@
 #include "GameObject.h"
 
-#include <ranges>
-
 #include "Component.h"
 #include "TextureComponent.h"
 #include "Transform.h"
 #include "TransformComponent.h"
+
+#include <ranges>
 
 class NoParentError{};
 
@@ -27,6 +27,8 @@ void GameObject::Update()
 	{
 		pComponent->Update();
 	}
+
+	DeleteMarkedComponents();
 }
 
 void GameObject::Render() //const
@@ -134,4 +136,30 @@ void dae::GameObject::RemoveChild(GameObject* pChild)
 		{
 			return pChild == pObj;
 		});
+}
+
+void dae::GameObject::RemoveDependentComponents(Component* pComponent)
+{
+	const auto& pDependentTypes{ pComponent->GetDependentComponentTypes() };
+	for(const auto& type : pDependentTypes)
+	{
+		// If there is no component in the map, don't do anything to prevent errors
+		if (!m_pComponents.contains(type)) continue;
+
+		const auto pDependentComponent{ m_pComponents.at(type).get() };
+		RemoveDependentComponents(pDependentComponent);
+		m_pComponentTypesToDelete.push_back(type);
+	}
+}
+
+void dae::GameObject::DeleteMarkedComponents()
+{
+	if (m_pComponentTypesToDelete.empty()) return;
+
+	for (const auto& type : m_pComponentTypesToDelete)
+	{
+		std::cout << "Deleted: " << type->name() << "\n";
+		m_pComponents.erase(type);
+	}
+	m_pComponentTypesToDelete.clear();
 }

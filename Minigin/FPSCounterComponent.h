@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FPSCOUNTER_COMPONENT_H
+#define FPSCOUNTER_COMPONENT_H
+
 #include "Component.h"
 
 namespace dae
@@ -9,7 +11,7 @@ namespace dae
 	{
 	public:
 		explicit FPSCounterComponent(GameObject* pGameObject, float loggingRate);
-		virtual ~FPSCounterComponent() override = default;
+		~FPSCounterComponent() override = default;
 
 		FPSCounterComponent(const FPSCounterComponent& other) = delete;
 		FPSCounterComponent& operator=(const FPSCounterComponent& other) = delete;
@@ -22,6 +24,9 @@ namespace dae
 		const float m_TimePerLog;
 		float m_TimeSinceLastLog;
 		int m_FramesSinceLastLog;
+
+		TextComponent* m_pTextComponent;
 	};
 
 }
+#endif

@@ -1,4 +1,7 @@
 #include "TransformComponent.h"
+#include "GameObject.h"
+
+#include <iostream>
 
 class NoTransformOnGameObject
 {

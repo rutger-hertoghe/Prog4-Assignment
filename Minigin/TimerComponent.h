@@ -1,14 +1,22 @@
-#pragma once
-#include <functional>
+#ifndef TIMER_COMPONENT_H
+#define TIMER_COMPONENT_H
 
 #include "Component.h"
+
+#include <functional>
+
 namespace dae
 {
-	// TODO: BIG SIX
 	class TimerComponent final : public Component
 	{
 	public:
 		explicit TimerComponent(GameObject* pGameObject, float expirationTime, bool isActive, bool isRepeating, const std::function<void()>& action);
+		~TimerComponent() override = default;
+
+		TimerComponent(const TimerComponent* other) = delete;
+		TimerComponent& operator=(const TimerComponent* other) = delete;
+		TimerComponent(TimerComponent&& other) = delete;
+		TimerComponent& operator=(TimerComponent&& other) = delete;
 
 		virtual void Update() override;
 
@@ -20,3 +28,4 @@ namespace dae
 		bool m_IsActive;
 	};
 }
+#endif

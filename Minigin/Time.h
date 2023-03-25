@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TIME_H
+#define TIME_H
 #include <chrono>
 #include "Singleton.h"
 
@@ -26,4 +27,4 @@ private:
 
 	std::chrono::duration<float> m_MaxSleepTime{0.f};
 };
-
+#endif

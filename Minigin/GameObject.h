@@ -1,15 +1,12 @@
-#pragma once
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 #include <memory>
-#include <string>
-//#include "TypeMap.h"
-//#include "OwningTypeMap.h"
 #include <vector>
 #include <unordered_map>
-#include <stdexcept>
 #include <iostream>
-#include "Component.h"
 
-//#include "TransformComponent.h"
+#include "TransformComponent.h"
 
 namespace dae
 {
@@ -65,6 +62,12 @@ namespace dae
 
 		void AddChild(GameObject* pChild);
 		void RemoveChild(GameObject* pChild);
+
+		void RemoveDependentComponents(Component* pComponent);
+		void DeleteMarkedComponents();
+
+		// To prevent deletion in Update(), which may cause undefined behavior
+		std::vector<const type_info*> m_pComponentTypesToDelete;
 	};
 
 
@@ -73,6 +76,8 @@ namespace dae
 	// | TEMPLATED FUNCTION DEFINITIONS |
 	// |--------------------------------|
 
+	// Gets the component of the type specified by the template argument
+	// If none is found, returns 'nullptr'.
 	template<typename T_Component>
 	T_Component* GameObject::GetComponent()
 	{
@@ -83,6 +88,11 @@ namespace dae
 		return nullptr;
 	}
 
+	// Adds a component to the GameObject of the type specified as the template argument, 
+	// component constructor arguments can/must be given as arguments.
+	//
+	// If the component is dependent on other components, these will be automatically
+	// added as well.
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::AddComponent(Args... args)
 	{
@@ -97,14 +107,32 @@ namespace dae
 		return GetComponent<T_Component>();
 	}
 
+	// Marks the component specified by the template argument type for deletion, along with all the components dependent on it.
 	template<typename T_Component>
 	bool GameObject::RemoveComponent()
 	{
-		// TODO: ISSUE remove component deletes the component from the gameobject, but other dependent components still try to access it!
-		const auto deletedElements{ m_pComponents.erase(&typeid(T_Component)) };
-		return (deletedElements == 1 ? true : false);
+		if(typeid(T_Component) == typeid(TransformComponent))
+		{
+			std::cout << "Removing the transform of a GameObject is not allowed!\n";
+			return false;
+		}
+
+		if(auto pComponent{ GetComponent<T_Component>() })
+		{
+			RemoveDependentComponents(pComponent);
+			m_pComponentTypesToDelete.push_back(&typeid(T_Component));
+			return true;
+		}
+		
+		return false;
 	}
 
+	// Automatically adds a component of the type specified by the template argument to the GameObject
+	// if it is not found on the GameObject yet. Depending on the aforementioned, either returns the
+	// existing or the newly created component.
+	//
+	// SHOULD ALWAYS BE FOLLOWED BY ADDING COMPONENT IN WHICH IT IS CALLED TO THE LIST OF DEPENDENTS OF THE REQUIRED COMPONENT
+	// Use: "pRequiredComponent->AddDependentComponentType(&typeid(*this));"
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::RequireComponent(Args... args)
 	{
@@ -116,3 +144,4 @@ namespace dae
 		return AddComponent<T_Component>(args...);
 	}
 }
+#endif

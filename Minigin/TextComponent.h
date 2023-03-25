@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXT_COMPONENT_H
+#define TEXT_COMPONENT_H
+
 #include "Component.h"
 #include "ResourceManager.h"
 
@@ -11,7 +13,7 @@ namespace dae
 	{
 	public:
 		explicit TextComponent(GameObject* pGameObject, const std::string& text = "Text not set!", std::shared_ptr<Font> font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
-		virtual ~TextComponent() override = default;
+		~TextComponent() override = default;
 
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
@@ -26,7 +28,8 @@ namespace dae
 		bool m_NeedsUpdate;
 		std::string m_Text;
 		std::shared_ptr<Font> m_Font;
+
+		TextureComponent* m_pTextureComponent;
 	};
 }
-
-
+#endif

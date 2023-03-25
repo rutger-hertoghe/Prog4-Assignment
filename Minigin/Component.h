@@ -1,5 +1,7 @@
-#pragma once
-#include "GameObject.h"
+#ifndef COMPONENT_H
+#define COMPONENT_H
+
+#include <vector>
 
 namespace dae
 {
@@ -15,8 +17,17 @@ namespace dae
 		Component(Component&& other) = delete;
 		Component& operator=(Component&& other) = delete;
 
-		//virtual void Start() = 0;
 		virtual void Update() = 0;
+
+		void AddDependentComponentType(const type_info* pDependentType)
+		{
+			m_pDependentComponentTypes.push_back(pDependentType);
+		}
+
+		const std::vector<const type_info*>& GetDependentComponentTypes()
+		{
+			return m_pDependentComponentTypes;
+		}
 
 	protected:
 		explicit Component(GameObject* pGameObject)
@@ -30,5 +41,9 @@ namespace dae
 
 	private:
 		GameObject* m_pGameObject;
+
+		std::vector<const type_info*> m_pDependentComponentTypes;
 	};
 }
+
+#endif

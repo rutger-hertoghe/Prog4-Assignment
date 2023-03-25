@@ -1,10 +1,11 @@
-#pragma once
-#include <SDL.h>
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include "Singleton.h"
-#include <memory>
-
 #include "ThrowawayPlotsClass.h"
+
+#include <SDL.h>
+#include <memory>
 
 namespace dae
 {
@@ -34,4 +35,4 @@ namespace dae
 		std::unique_ptr<ThrowawayPlotsClass> m_pPlots;
 	};
 }
-
+#endif

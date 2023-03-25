@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTURE_COMPONENT_H
+#define TEXTURE_COMPONENT_H
+#include <memory>
 #include <string>
 
 #include "Component.h"
@@ -14,7 +16,7 @@ namespace dae
 		explicit TextureComponent(GameObject* pGameObject, const std::string& filename);
 		explicit TextureComponent(GameObject* pParent);
 
-		virtual ~TextureComponent() override = default;
+		~TextureComponent() override = default;
 
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;
@@ -34,7 +36,8 @@ namespace dae
 		std::shared_ptr<Texture2D> m_Texture{};
 		int m_Width;
 		int m_Height;
+
+		TransformComponent* m_pTransformComponent;
 	};
 }
-
-
+#endif

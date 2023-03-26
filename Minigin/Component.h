@@ -10,6 +10,7 @@ namespace dae
 	class Component
 	{
 	public:
+		// Component constructor is in the protected field
 		virtual ~Component() = default;
 
 		Component(const Component& other) = delete;
@@ -24,7 +25,7 @@ namespace dae
 			m_pDependentComponentTypes.push_back(pDependentType);
 		}
 
-		const std::vector<const type_info*>& GetDependentComponentTypes()
+		[[nodiscard]] const std::vector<const type_info*>& GetDependentComponentTypes()
 		{
 			return m_pDependentComponentTypes;
 		}

@@ -34,15 +34,21 @@
     <Filter Include="Source Files\TrashTheCache">
       <UniqueIdentifier>{8cdff915-3039-4410-8d63-01c1c61475fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{cbab334a-c750-4c40-ae57-652b26bb1e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input\Commands">
+      <UniqueIdentifier>{060f2450-d3bb-474d-99b5-a4d567cc1294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input\Devices">
+      <UniqueIdentifier>{b1340ef0-ef3b-4f0b-9561-c7d85048dec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Source Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -83,9 +89,6 @@
     </ClInclude>
     <ClInclude Include="MoveComponent.h">
       <Filter>Source Files\Components\MovementComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMap.h">
-      <Filter>Source Files\Structure</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Source Files\Structure</Filter>
@@ -132,6 +135,27 @@
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementBehaviorComponent.h">
+      <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -145,12 +169,6 @@
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -180,9 +198,6 @@
       <Filter>Source Files\Components\MovementComponents</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMap.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
     <ClCompile Include="RotatorComponent.cpp">
@@ -220,6 +235,27 @@
     </ClCompile>
     <ClCompile Include="ThrowawayPlotsClass.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementBehaviorComponent.cpp">
+      <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source Files\Input\Devices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

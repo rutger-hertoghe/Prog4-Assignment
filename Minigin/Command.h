@@ -8,22 +8,22 @@ namespace dae
 	class Command
 	{
 	public:
+		// Command constructor is in protected field
 		virtual ~Command() = default;
+
+		Command(const Command& other) = default;
+		Command& operator=(const Command& other) = delete;
+		Command(Command&& other) = default;
+		Command& operator=(Command&& other) = delete;
+
 		virtual void Execute() = 0;
 
 	protected:
+		explicit Command(GameObject* pActor);
+		[[nodiscard]] GameObject* GetActor() const;
 
 	private:
-		GameObject* m_pGameActor;
+		GameObject* m_pActor;
 	};
-
-	class MoveOnXCommand final : public Command
-	{
-	public:
-		virtual void Execute() override;
-
-	private:
-	};
-
 }
 #endif

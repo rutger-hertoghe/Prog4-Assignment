@@ -14,64 +14,45 @@
 dae::InputManager::InputManager()
 {
 	InitializeControllers();
+
+	m_pKeyboard = std::make_unique<Keyboard>(4);
 }
 
 bool dae::InputManager::ProcessInput()
 {
-	for(const auto& controller : m_pControllers)
-	{
-		if(controller)
-		{
-			controller->Update();
-		}
-	}
-
-	for(const auto& buttonCommandPair : m_pCommandMap)
-	{
-		switch(buttonCommandPair.first.actionType)
-		{
-		case KeyState::down:
-			if (m_pControllers[buttonCommandPair.first.controllerID]->IsDown(buttonCommandPair.first.XInputGamepadButton))
-			{
-				buttonCommandPair.second->Execute();
-			}
-			break;
-		case KeyState::pressed:
-			if(m_pControllers[buttonCommandPair.first.controllerID]->IsPressed(buttonCommandPair.first.XInputGamepadButton))
-			{
-				buttonCommandPair.second->Execute();
-			}
-			break;
-		case KeyState::released:
-			if(m_pControllers[buttonCommandPair.first.controllerID]->IsReleased(buttonCommandPair.first.XInputGamepadButton))
-			{
-				buttonCommandPair.second->Execute();
-			}
-			break;
-		}
-	}
-
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+		if (e.type == SDL_QUIT)
+		{
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
-			
+		if (e.type == SDL_KEYDOWN)
+		{
+			m_pKeyboard->SetDown(e.key.keysym.scancode);
 		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
+		if (e.type == SDL_KEYUP)
+		{
+			m_pKeyboard->SetUp(e.key.keysym.scancode);
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
+
 		}
 		// IMGUI
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
+	UpdateControllers();
+	ProcessControllerActions();
+
+	m_pKeyboard->Update();
+
 
 	return true;
 }
 
-void dae::InputManager::BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command)
+void dae::InputManager::BindCommand(const ButtonAction& buttonAction, Command* command)
 {
-	m_pCommandMap.insert(std::make_pair(controllerButtonAction, std::unique_ptr<Command>(command)));
+	m_pCommandMap.insert(std::make_pair(buttonAction, std::unique_ptr<Command>(command)));
 }
 
 void dae::InputManager::InitializeControllers()
@@ -98,7 +79,41 @@ void dae::InputManager::InitializeControllers()
 	}
 }
 
-//void dae::InputManager::BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command)
-//{
-//	m_pCommandMap.insert(std::make_pair(controllerButtonAction, command));
-//}
+void dae::InputManager::UpdateControllers()
+{
+	for (const auto& controller : m_pControllers)
+	{
+		if (controller)
+		{
+			controller->Update();
+		}
+	}
+}
+
+void dae::InputManager::ProcessControllerActions()
+{
+	for (const auto& buttonCommandPair : m_pCommandMap)
+	{
+		switch (buttonCommandPair.first.m_ActionType)
+		{
+		case KeyState::down:
+			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsDown(buttonCommandPair.first.m_XInputGamepadButton))
+			{
+				buttonCommandPair.second->Execute();
+			}
+			break;
+		case KeyState::pressed:
+			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsPressed(buttonCommandPair.first.m_XInputGamepadButton))
+			{
+				buttonCommandPair.second->Execute();
+			}
+			break;
+		case KeyState::released:
+			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsReleased(buttonCommandPair.first.m_XInputGamepadButton))
+			{
+				buttonCommandPair.second->Execute();
+			}
+			break;
+		}
+	}
+}

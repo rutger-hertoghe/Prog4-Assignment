@@ -3,11 +3,13 @@
 
 #include "Singleton.h"
 #include "Controller.h"
+#include "Keyboard.h"
 #include "Command.h"
 
 #include <memory>
 #include <unordered_map>
 #include <vector>
+
 
 namespace dae
 {
@@ -18,22 +20,37 @@ namespace dae
 		down
 	};
 
-	struct ControllerButtonAction
+	struct ButtonAction
 	{
-		int controllerID;
-		int XInputGamepadButton;
-		KeyState actionType;
+		explicit ButtonAction() = default;
+		explicit ButtonAction(int controllerID, int XInputGamepadButton, KeyState actionType)
+			: m_ControllerID(controllerID)
+			, m_XInputGamepadButton(XInputGamepadButton)
+			, m_ActionType(actionType)
+			, m_KeyboardButton(SDL_NUM_SCANCODES)
+		{}
+		explicit ButtonAction(int controllerID, SDL_Scancode keyboardButton, KeyState actionType)
+			: m_ControllerID(controllerID)
+			, m_XInputGamepadButton(0)
+			, m_ActionType(actionType)
+			, m_KeyboardButton(keyboardButton)
+		{}
+		int m_ControllerID;
+		int m_XInputGamepadButton;
+		SDL_Scancode m_KeyboardButton;
+		KeyState m_ActionType;
 
-		bool operator==(const ControllerButtonAction& rhs) const
+		bool operator==(const ButtonAction& rhs) const
 		{
-			return XInputGamepadButton == rhs.XInputGamepadButton && actionType == rhs.actionType && controllerID == rhs.controllerID;
+			return m_XInputGamepadButton == rhs.m_XInputGamepadButton && m_ActionType == rhs.m_ActionType && m_ControllerID == rhs.m_ControllerID;
 		}
 
-		size_t operator()(const ControllerButtonAction& keyValue) const
+		size_t operator()(const ButtonAction& keyValue) const
 		{
-			return	std::hash<int>()(keyValue.XInputGamepadButton)
-					^ std::hash<int>()(static_cast<int>(keyValue.actionType))
-					^ std::hash<int>()(~static_cast<int>(keyValue.controllerID));
+			return	std::hash<int>()(keyValue.m_XInputGamepadButton)
+				^ std::hash<int>()(static_cast<int>(keyValue.m_ActionType))
+				^ std::hash<int>()(~static_cast<int>(keyValue.m_ControllerID))
+				^ std::hash<int>()(~static_cast<int>(keyValue.m_KeyboardButton));
 		}
 	};
 	
@@ -42,15 +59,17 @@ namespace dae
 	public:
 		InputManager();
 		bool ProcessInput();
-		void BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command);
+		void BindCommand(const ButtonAction& buttonAction, Command* command);
 
 	private:
+		std::unique_ptr<Keyboard> m_pKeyboard;
 		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
-		std::unordered_map<ControllerButtonAction, std::unique_ptr<Command>, ControllerButtonAction> m_pCommandMap;
+		std::unordered_map<ButtonAction, std::unique_ptr<Command>, ButtonAction> m_pCommandMap;
 		std::vector<std::unique_ptr<Controller>> m_pControllers;
-		//void BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command);
 
 		void InitializeControllers();
+		void UpdateControllers();
+		void ProcessControllerActions();
 	};
 
 }

@@ -48,9 +48,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Source Files\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
@@ -135,9 +132,6 @@
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Source Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
@@ -146,6 +140,18 @@
     </ClInclude>
     <ClInclude Include="MovementBehaviorComponent.h">
       <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,9 +166,6 @@
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -230,9 +233,6 @@
     <ClCompile Include="ThrowawayPlotsClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -244,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="MovementBehaviorComponent.cpp">
       <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

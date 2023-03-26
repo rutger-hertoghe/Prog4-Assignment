@@ -135,9 +135,6 @@
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Source Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Source Files\Input\Commands</Filter>
     </ClInclude>
@@ -150,10 +147,13 @@
     <ClInclude Include="InputManager.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Source Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="InputDevice.h">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
       <Filter>Source Files\Input\Devices</Filter>
     </ClInclude>
   </ItemGroup>
@@ -236,9 +236,6 @@
     <ClCompile Include="ThrowawayPlotsClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
@@ -254,8 +251,11 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source Files\Input\Devices</Filter>
+    </ClCompile>
     <ClCompile Include="Keyboard.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Input\Devices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

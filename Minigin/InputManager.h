@@ -2,8 +2,7 @@
 #define INPUT_MANAGER_H
 
 #include "Singleton.h"
-#include "Controller.h"
-#include "Keyboard.h"
+#include "InputDevice.h"
 #include "Command.h"
 
 #include <memory>
@@ -13,6 +12,8 @@
 
 namespace dae
 {
+	class Keyboard;
+
 	enum class KeyState
 	{
 		pressed,
@@ -23,9 +24,9 @@ namespace dae
 	struct ButtonAction
 	{
 		explicit ButtonAction() = default;
-		explicit ButtonAction(int controllerID, int XInputGamepadButton, KeyState actionType)
+		explicit ButtonAction(int controllerID, GamePad button, KeyState actionType)
 			: m_InputDeviceID(controllerID)
-			, m_XInputGamepadButton(XInputGamepadButton)
+			, m_XInputGamepadButton(static_cast<int>(button))
 			, m_ActionType(actionType)
 			, m_KeyboardButton(SDL_NUM_SCANCODES)
 			, m_IsGamePad(true)
@@ -66,7 +67,7 @@ namespace dae
 		void BindCommand(const ButtonAction& buttonAction, Command* command);
 
 	private:
-		Keyboard* m_pKeyboard; // Raw ptr to keyboard inputDevice for easy access
+		Keyboard* m_pKeyboard; // Raw pointer for easy access
 		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
 		std::unordered_map<ButtonAction, std::unique_ptr<Command>, ButtonAction> m_pCommandMap;
 		std::vector<std::unique_ptr<InputDevice>> m_pInputDevices;

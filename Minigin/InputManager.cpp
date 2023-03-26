@@ -8,6 +8,9 @@
 #include <windows.h>
 #include <Xinput.h>
 
+#include "Controller.h"
+#include "Keyboard.h"
+
 //#include "Command.h"
 
 
@@ -16,7 +19,7 @@ dae::InputManager::InputManager()
 	InitializeInputDevices();
 
 	constexpr int keyboardId{ 4 };
-	m_pKeyboard = static_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
+	m_pKeyboard = dynamic_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
 }
 
 bool dae::InputManager::ProcessInput()
@@ -72,10 +75,6 @@ void dae::InputManager::InitializeInputDevices()
 			// TODO: delete later
 			std::cout << "Controller connected with ID " << i << "\n";
 		}
-		//else
-		//{
-		//	m_pInputDevices.pop_back(); // To ensure the vector shrinks again for size correctness at a later point
-		//}
 	}
 	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>(XUSER_MAX_COUNT);
 }

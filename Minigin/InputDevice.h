@@ -1,52 +1,30 @@
 #ifndef INPUT_DEVICE_H
 #define	INPUT_DEVICE_H
-#include <memory>
 namespace dae
 {
-	enum class DeviceType
-	{
-		Controller,
-		Keyboard
-	};
-
-	enum class GamePad
-	{
-		A				= 0x1000,
-		B				= 0x2000,
-		X				= 0x4000,
-		Y				= 0x8000,
-		LeftShoulder	= 0x0100,
-		RightShoulder	= 0x0200,
-		Start			= 0x0010,
-		Back			= 0x0020,
-		DPadUp			= 0x0001,
-		DPadDown		= 0x0002,
-		DPadRight		= 0x0008,
-		DPadLeft		= 0x0004
-	};
-
 	class InputDevice
 	{
 	public:
-		explicit InputDevice(unsigned int id, DeviceType deviceType);
 		// Constructor is in protected field
-		virtual ~InputDevice();
+		virtual ~InputDevice() = default;
 
-		virtual void Update();
+		InputDevice(const InputDevice& other) = delete;
+		InputDevice(InputDevice&& other) = delete;
+		InputDevice& operator=(const InputDevice& other) = delete;
+		InputDevice& operator=(InputDevice&& other) = delete;
 
-		[[nodiscard]] virtual bool IsDown(int button) const;
-		[[nodiscard]] virtual bool IsReleased(int button) const;
-		[[nodiscard]] virtual bool IsPressed(int button) const;
+		virtual void Update() = 0;
 
-		virtual void SetDown(int button);
-		virtual void SetUp(int button);
+		[[nodiscard]] virtual bool IsDown(int button) const = 0;
+		[[nodiscard]] virtual bool IsReleased(int button) const = 0;
+		[[nodiscard]] virtual bool IsPressed(int button) const = 0;
 
 	protected:
-		class InputDeviceImplementation;
-		class KeyboardImplementation;
-		class ControllerImplementation;
+		explicit InputDevice(unsigned int id)
+			: m_DeviceID{ id }
+		{}
 
-		std::unique_ptr<InputDeviceImplementation> pImpl;
+		unsigned int m_DeviceID;
 	};
 }
 #endif

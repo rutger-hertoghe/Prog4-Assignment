@@ -19,7 +19,7 @@ dae::InputManager::InputManager()
 	InitializeInputDevices();
 
 	constexpr int keyboardId{ 4 };
-	m_pKeyboard = dynamic_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
+	m_pKeyboard = static_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
 }
 
 bool dae::InputManager::ProcessInput()

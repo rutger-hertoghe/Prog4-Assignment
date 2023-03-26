@@ -8,22 +8,21 @@ namespace dae
 	class Command
 	{
 	public:
+		Command(GameObject* pActor);
 		virtual ~Command() = default;
+
+		Command(const Command& other) = delete;
+		Command& operator=(const Command& other) = delete;
+		Command(Command&& other) = delete;
+		Command& operator=(Command&& other) = delete;
+
 		virtual void Execute() = 0;
 
 	protected:
+		[[nodiscard]] GameObject* GetActor() const;
 
 	private:
-		GameObject* m_pGameActor;
+		GameObject* m_pActor;
 	};
-
-	class MoveOnXCommand final : public Command
-	{
-	public:
-		virtual void Execute() override;
-
-	private:
-	};
-
 }
 #endif

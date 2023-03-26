@@ -24,7 +24,7 @@ namespace dae
 			m_pDependentComponentTypes.push_back(pDependentType);
 		}
 
-		const std::vector<const type_info*>& GetDependentComponentTypes()
+		[[nodiscard]] const std::vector<const type_info*>& GetDependentComponentTypes()
 		{
 			return m_pDependentComponentTypes;
 		}

@@ -34,6 +34,12 @@
     <Filter Include="Source Files\TrashTheCache">
       <UniqueIdentifier>{8cdff915-3039-4410-8d63-01c1c61475fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{cbab334a-c750-4c40-ae57-652b26bb1e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input\Commands">
+      <UniqueIdentifier>{060f2450-d3bb-474d-99b5-a4d567cc1294}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -84,9 +90,6 @@
     <ClInclude Include="MoveComponent.h">
       <Filter>Source Files\Components\MovementComponents</Filter>
     </ClInclude>
-    <ClInclude Include="TypeMap.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
@@ -131,6 +134,15 @@
     </ClInclude>
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Source Files\Input\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +194,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMap.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
     <ClCompile Include="RotatorComponent.cpp">
       <Filter>Source Files\Components\MovementComponents</Filter>
     </ClCompile>
@@ -220,6 +229,15 @@
     </ClCompile>
     <ClCompile Include="ThrowawayPlotsClass.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

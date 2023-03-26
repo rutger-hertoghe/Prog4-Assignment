@@ -1,26 +1,26 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#define WIN32_LEAN_AND_MEAN
+//#include <windows.h>
+#include "InputDevice.h"
 #include <Xinput.h>
+
 
 namespace dae
 {
-	class Controller final
+	class Controller final : public InputDevice
 	{
 	public:
 		explicit Controller(DWORD id);
-		~Controller() = default;
+		~Controller() override = default;
 
-		void Update();
-		[[nodiscard]] bool IsDown(int XInputGamepadButton) const;
-		[[nodiscard]] bool IsReleased(int XInputGamepadButton) const;
-		[[nodiscard]] bool IsPressed(int XInputGamepadButton) const;
+		virtual void Update() override;
+		[[nodiscard]] virtual bool IsDown(int XInputGamepadButton) const override;
+		[[nodiscard]] virtual bool IsReleased(int XInputGamepadButton) const override;
+		[[nodiscard]] virtual bool IsPressed(int XInputGamepadButton) const override;
 		
 	private:
-		DWORD m_ControllerID;
-
 		XINPUT_STATE m_CurrentState;
 		XINPUT_STATE m_PreviousState;
 

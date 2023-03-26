@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Input\Commands">
       <UniqueIdentifier>{060f2450-d3bb-474d-99b5-a4d567cc1294}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input\Devices">
+      <UniqueIdentifier>{b1340ef0-ef3b-4f0b-9561-c7d85048dec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -151,7 +154,7 @@
       <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="InputDevice.h">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Input\Devices</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,9 +256,6 @@
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputDevice.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -41,18 +41,3 @@ bool dae::Keyboard::IsReleased(int SDL_Scancode) const
 {
 	return m_KeysReleasedThisFrame[SDL_Scancode];
 }
-
-//bool dae::Keyboard::IsDown(SDL_Scancode key) const
-//{
-//	return m_CurrentState[key];
-//}
-//
-//bool dae::Keyboard::IsReleased(SDL_Scancode key) const
-//{
-//	return m_KeysReleasedThisFrame[key];
-//}
-//
-//bool dae::Keyboard::IsPressed(SDL_Scancode key) const
-//{
-//	return m_KeysPressedThisFrame[key];
-//}

@@ -4,7 +4,7 @@
 
 
 dae::Controller::Controller(DWORD id)
-	: m_ControllerID(id)
+	: InputDevice(id)
 	, m_ButtonsPressedThisFrame(0)
 	, m_ButtonsReleasedThisFrame(0)
 {
@@ -18,7 +18,7 @@ void dae::Controller::Update()
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	// When both are XINPUT_STATES, the below does essentially the same, but might (keyword might) cause more overhead due to copy constuctor/assignment
 	//m_PreviousState = m_CurrentState;
-	XInputGetState(m_ControllerID, &m_CurrentState);
+	XInputGetState(m_DeviceID, &m_CurrentState);
 
 	const auto buttonChanges{ m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons };
 	m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;

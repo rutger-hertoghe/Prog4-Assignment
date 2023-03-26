@@ -24,32 +24,36 @@ namespace dae
 	{
 		explicit ButtonAction() = default;
 		explicit ButtonAction(int controllerID, int XInputGamepadButton, KeyState actionType)
-			: m_ControllerID(controllerID)
+			: m_InputDeviceID(controllerID)
 			, m_XInputGamepadButton(XInputGamepadButton)
 			, m_ActionType(actionType)
 			, m_KeyboardButton(SDL_NUM_SCANCODES)
+			, m_IsGamePad(true)
 		{}
-		explicit ButtonAction(int controllerID, SDL_Scancode keyboardButton, KeyState actionType)
-			: m_ControllerID(controllerID)
+		explicit ButtonAction(SDL_Scancode keyboardButton, KeyState actionType)
+			: m_InputDeviceID(4) // Always 4 for keyboard
 			, m_XInputGamepadButton(0)
 			, m_ActionType(actionType)
 			, m_KeyboardButton(keyboardButton)
+			, m_IsGamePad(false)
 		{}
-		int m_ControllerID;
+		int m_InputDeviceID;
 		int m_XInputGamepadButton;
 		SDL_Scancode m_KeyboardButton;
 		KeyState m_ActionType;
 
+		bool m_IsGamePad;
+
 		bool operator==(const ButtonAction& rhs) const
 		{
-			return m_XInputGamepadButton == rhs.m_XInputGamepadButton && m_ActionType == rhs.m_ActionType && m_ControllerID == rhs.m_ControllerID;
+			return m_XInputGamepadButton == rhs.m_XInputGamepadButton && m_ActionType == rhs.m_ActionType && m_InputDeviceID == rhs.m_InputDeviceID;
 		}
 
 		size_t operator()(const ButtonAction& keyValue) const
 		{
 			return	std::hash<int>()(keyValue.m_XInputGamepadButton)
 				^ std::hash<int>()(static_cast<int>(keyValue.m_ActionType))
-				^ std::hash<int>()(~static_cast<int>(keyValue.m_ControllerID))
+				^ std::hash<int>()(~static_cast<int>(keyValue.m_InputDeviceID))
 				^ std::hash<int>()(~static_cast<int>(keyValue.m_KeyboardButton));
 		}
 	};
@@ -62,14 +66,14 @@ namespace dae
 		void BindCommand(const ButtonAction& buttonAction, Command* command);
 
 	private:
-		std::unique_ptr<Keyboard> m_pKeyboard;
+		Keyboard* m_pKeyboard; // Raw ptr to keyboard inputDevice for easy access
 		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
 		std::unordered_map<ButtonAction, std::unique_ptr<Command>, ButtonAction> m_pCommandMap;
-		std::vector<std::unique_ptr<Controller>> m_pControllers;
+		std::vector<std::unique_ptr<InputDevice>> m_pInputDevices;
 
-		void InitializeControllers();
-		void UpdateControllers();
-		void ProcessControllerActions();
+		void InitializeInputDevices();
+		void UpdateInputDevices();
+		void ProcessDeviceInput();
 	};
 
 }

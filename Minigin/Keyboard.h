@@ -12,6 +12,7 @@ namespace dae
 	{
 	public:
 		explicit Keyboard(DWORD id);
+		~Keyboard() override = default;
 
 		virtual void Update() override;
 

@@ -230,7 +230,6 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounterComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />

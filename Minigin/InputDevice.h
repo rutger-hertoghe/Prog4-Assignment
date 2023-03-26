@@ -14,9 +14,9 @@ namespace dae
 
 		virtual void Update() = 0;
 
-		[[nodiscard]] virtual bool IsDown(int XInputGamepadButton) const = 0;
-		[[nodiscard]] virtual bool IsReleased(int XInputGamepadButton) const = 0;
-		[[nodiscard]] virtual bool IsPressed(int XInputGamepadButton) const = 0;
+		[[nodiscard]] virtual bool IsDown(int button) const = 0;
+		[[nodiscard]] virtual bool IsReleased(int button) const = 0;
+		[[nodiscard]] virtual bool IsPressed(int button) const = 0;
 
 	protected:
 		InputDevice(DWORD id)

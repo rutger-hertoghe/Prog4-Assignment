@@ -13,9 +13,10 @@
 
 dae::InputManager::InputManager()
 {
-	InitializeControllers();
+	InitializeInputDevices();
 
-	m_pKeyboard = std::make_unique<Keyboard>(4);
+	constexpr int keyboardId{ 4 };
+	m_pKeyboard = static_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
 }
 
 bool dae::InputManager::ProcessInput()
@@ -41,11 +42,10 @@ bool dae::InputManager::ProcessInput()
 		// IMGUI
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
-	UpdateControllers();
-	ProcessControllerActions();
 
-	m_pKeyboard->Update();
-
+	UpdateInputDevices();
+	
+	ProcessDeviceInput();
 
 	return true;
 }
@@ -55,9 +55,9 @@ void dae::InputManager::BindCommand(const ButtonAction& buttonAction, Command* c
 	m_pCommandMap.insert(std::make_pair(buttonAction, std::unique_ptr<Command>(command)));
 }
 
-void dae::InputManager::InitializeControllers()
+void dae::InputManager::InitializeInputDevices()
 {
-	m_pControllers.resize(XUSER_MAX_COUNT);
+	m_pInputDevices.resize(XUSER_MAX_COUNT + 1); // + 1 for keyboard
 
 	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
 	{
@@ -68,50 +68,58 @@ void dae::InputManager::InitializeControllers()
 
 		if (dwResult == ERROR_SUCCESS) // Bad name: "ERROR_SUCCESS" to indicate success
 		{
-			m_pControllers[static_cast<int>(i)] = std::make_unique<Controller>(i);
+			m_pInputDevices[static_cast<int>(i)] = std::make_unique<Controller>(i);
 			// TODO: delete later
 			std::cout << "Controller connected with ID " << i << "\n";
 		}
 		//else
 		//{
-		//	m_pControllers.pop_back(); // To ensure the vector shrinks again for size correctness at a later point
+		//	m_pInputDevices.pop_back(); // To ensure the vector shrinks again for size correctness at a later point
 		//}
 	}
+	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>(XUSER_MAX_COUNT);
 }
 
-void dae::InputManager::UpdateControllers()
+void dae::InputManager::UpdateInputDevices()
 {
-	for (const auto& controller : m_pControllers)
+	for (const auto& pInputDevice : m_pInputDevices)
 	{
-		if (controller)
+		if (pInputDevice)
 		{
-			controller->Update();
+			pInputDevice->Update();
 		}
 	}
 }
 
-void dae::InputManager::ProcessControllerActions()
+void dae::InputManager::ProcessDeviceInput()
 {
 	for (const auto& buttonCommandPair : m_pCommandMap)
 	{
-		switch (buttonCommandPair.first.m_ActionType)
+		const auto& input{ buttonCommandPair.first };
+
+		// TODO: Idea: remove all commands for unused input devices
+		if (m_pInputDevices[input.m_InputDeviceID] == nullptr) continue; // If controller is not connected, but commands were specified, do not execute
+
+		const auto& command{ buttonCommandPair.second };
+		const int keyCode{ (input.m_IsGamePad ? input.m_XInputGamepadButton : input.m_KeyboardButton) };
+		switch (input.m_ActionType)
 		{
 		case KeyState::down:
-			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsDown(buttonCommandPair.first.m_XInputGamepadButton))
+			if (m_pInputDevices[input.m_InputDeviceID]->IsDown(keyCode))
 			{
-				buttonCommandPair.second->Execute();
+				command->Execute();
 			}
 			break;
 		case KeyState::pressed:
-			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsPressed(buttonCommandPair.first.m_XInputGamepadButton))
+			if (m_pInputDevices[input.m_InputDeviceID]->IsPressed(keyCode))
 			{
-				buttonCommandPair.second->Execute();
+				command->Execute();
 			}
 			break;
 		case KeyState::released:
-			if (m_pControllers[buttonCommandPair.first.m_ControllerID]->IsReleased(buttonCommandPair.first.m_XInputGamepadButton))
+			if (m_pInputDevices[input.m_InputDeviceID]->IsReleased(keyCode))
 			{
-				buttonCommandPair.second->Execute();
+				command->Execute();
 			}
 			break;
 		}

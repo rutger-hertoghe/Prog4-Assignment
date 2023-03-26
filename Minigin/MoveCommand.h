@@ -1,22 +1,31 @@
 #ifndef MOVE_COMMAND_H
 #define MOVE_COMMAND_H
 
-#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 
 #include "Command.h"
 
 namespace dae
 {
-    class MoveCommand final : public Command
+    class MovementBehaviorComponent;
+
+	class MoveCommand final : public Command
     {
     public:
-        MoveCommand(GameObject* pActor, const glm::vec3& direction);
+        MoveCommand(GameObject* pActor, const glm::vec2& direction);
+        virtual ~MoveCommand() override = default;
+
+        MoveCommand(const MoveCommand& other) = default;
+        MoveCommand& operator=(const MoveCommand& other) = delete;
+        MoveCommand(MoveCommand&& other) = default;
+        MoveCommand& operator=(MoveCommand&& other) = delete;
 
         // TODO: implement execution of MoveCommand
         void Execute() override;
 
     private:
-        glm::vec3 m_Direction;
+        glm::vec2 m_Direction;
+        MovementBehaviorComponent* m_MovementBehaviorComponent;
     };
 }
 #endif

@@ -3,6 +3,7 @@
 
 #include "Singleton.h"
 #include "Controller.h"
+#include "Command.h"
 
 #include <memory>
 #include <unordered_map>
@@ -10,8 +11,6 @@
 
 namespace dae
 {
-	class Command;
-
 	enum class KeyState
 	{
 		pressed,
@@ -43,11 +42,15 @@ namespace dae
 	public:
 		InputManager();
 		bool ProcessInput();
-		void BindCommand(ControllerButtonAction controllerButtonAction, Command* command);
+		void BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command);
 
 	private:
-		std::unordered_map<ControllerButtonAction, Command*, ControllerButtonAction> m_pCommandMap;
+		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
+		std::unordered_map<ControllerButtonAction, std::unique_ptr<Command>, ControllerButtonAction> m_pCommandMap;
 		std::vector<std::unique_ptr<Controller>> m_pControllers;
+		//void BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command);
+
+		void InitializeControllers();
 	};
 
 }

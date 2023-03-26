@@ -8,32 +8,12 @@
 #include <windows.h>
 #include <Xinput.h>
 
-#include "Command.h"
+//#include "Command.h"
 
 
 dae::InputManager::InputManager()
 {
-	m_pControllers.resize(XUSER_MAX_COUNT);
-
-	DWORD dwResult;
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
-	{
-		XINPUT_STATE state;
-		ZeroMemory(&state, sizeof(XINPUT_STATE));
-
-		dwResult = XInputGetState(i, &state);
-
-		if (dwResult == ERROR_SUCCESS) // Bad name: "ERROR_SUCCESS" to indicate success
-		{
-			m_pControllers[static_cast<int>(i)] = std::make_unique<Controller>(i);
-			// TODO: delete later
-			std::cout << "Controller connected with ID " << i << "\n";
-		}
-		else
-		{
-			m_pControllers.pop_back(); // To ensure the vector shrinks again for size correctness at a later point
-		}
-	}
+	InitializeControllers();
 }
 
 bool dae::InputManager::ProcessInput()
@@ -89,7 +69,36 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::BindCommand(ControllerButtonAction controllerButtonAction, Command* command)
+void dae::InputManager::BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command)
 {
-	m_pCommandMap.insert({ controllerButtonAction, command});
+	m_pCommandMap.insert(std::make_pair(controllerButtonAction, std::unique_ptr<Command>(command)));
 }
+
+void dae::InputManager::InitializeControllers()
+{
+	m_pControllers.resize(XUSER_MAX_COUNT);
+
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		XINPUT_STATE state;
+		ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+		const DWORD dwResult = XInputGetState(i, &state);
+
+		if (dwResult == ERROR_SUCCESS) // Bad name: "ERROR_SUCCESS" to indicate success
+		{
+			m_pControllers[static_cast<int>(i)] = std::make_unique<Controller>(i);
+			// TODO: delete later
+			std::cout << "Controller connected with ID " << i << "\n";
+		}
+		//else
+		//{
+		//	m_pControllers.pop_back(); // To ensure the vector shrinks again for size correctness at a later point
+		//}
+	}
+}
+
+//void dae::InputManager::BindCommand(const ControllerButtonAction& controllerButtonAction, Command* command)
+//{
+//	m_pCommandMap.insert(std::make_pair(controllerButtonAction, command));
+//}

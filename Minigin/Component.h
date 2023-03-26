@@ -10,6 +10,7 @@ namespace dae
 	class Component
 	{
 	public:
+		// Component constructor is in the protected field
 		virtual ~Component() = default;
 
 		Component(const Component& other) = delete;

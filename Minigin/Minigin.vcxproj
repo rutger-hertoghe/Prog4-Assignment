@@ -198,6 +198,7 @@
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MovementBehaviorComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RotatorComponent.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="MovementBehaviorComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />

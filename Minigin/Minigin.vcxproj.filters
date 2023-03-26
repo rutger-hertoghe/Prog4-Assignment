@@ -144,6 +144,9 @@
     <ClInclude Include="MoveCommand.h">
       <Filter>Source Files\Input\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="MovementBehaviorComponent.h">
+      <Filter>Source Files\Components\MovementComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -159,9 +162,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -238,6 +238,12 @@
     </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Source Files\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementBehaviorComponent.cpp">
+      <Filter>Source Files\Components\MovementComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

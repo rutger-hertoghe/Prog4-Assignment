@@ -20,7 +20,6 @@ namespace dae
         MoveCommand(MoveCommand&& other) = default;
         MoveCommand& operator=(MoveCommand&& other) = delete;
 
-        // TODO: implement execution of MoveCommand
         void Execute() override;
 
     private:

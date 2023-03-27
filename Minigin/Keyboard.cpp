@@ -11,12 +11,12 @@ public:
 	KeyboardImplementation() = default;
 
 	void Update();
-	[[nodiscard]] virtual bool IsDown(int SDL_ScanCode) const;
-	[[nodiscard]] virtual bool IsPressed(int SDL_ScanCode) const;
-	[[nodiscard]] virtual bool IsReleased(int SDL_ScanCode) const;
+	[[nodiscard]] bool IsDown(int SDL_ScanCode) const;
+	[[nodiscard]] bool IsPressed(int SDL_ScanCode) const;
+	[[nodiscard]] bool IsReleased(int SDL_ScanCode) const;
 
-	virtual void SetDown(int SDL_ScanCode);
-	virtual void SetUp(int SDL_ScanCode);
+	void SetDown(int SDL_ScanCode);
+	void SetUp(int SDL_ScanCode);
 
 private:
 	static constexpr int numScanCodes{ static_cast<int>(SDL_NUM_SCANCODES) };

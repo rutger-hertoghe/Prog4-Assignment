@@ -51,6 +51,7 @@ void dae::Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 
+	// TODO: move to GUI component
 	//ImGui_ImplOpenGL2_NewFrame();
 	//ImGui_ImplSDL2_NewFrame();
 	//ImGui::NewFrame();

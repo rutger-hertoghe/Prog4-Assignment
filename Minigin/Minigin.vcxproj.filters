@@ -251,10 +251,10 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="InputDevice.cpp">
+    <ClCompile Include="Keyboard.cpp">
       <Filter>Source Files\Input\Devices</Filter>
     </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
+    <ClCompile Include="Controller.cpp">
       <Filter>Source Files\Input\Devices</Filter>
     </ClCompile>
   </ItemGroup>

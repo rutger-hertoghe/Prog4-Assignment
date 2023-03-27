@@ -53,6 +53,7 @@ namespace dae
 
 		size_t operator()(const ButtonAction& keyValue) const
 		{
+			// TODO: work with regular map, hash could fail
 			return	std::hash<int>()(keyValue.m_XInputGamepadButton)
 				^ std::hash<int>()(static_cast<int>(keyValue.m_ActionType))
 				^ std::hash<int>()(~static_cast<int>(keyValue.m_InputDeviceID))

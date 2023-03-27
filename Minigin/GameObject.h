@@ -6,11 +6,8 @@
 #include <unordered_map>
 #include <iostream>
 
-#include "TransformComponent.h"
-
 namespace dae
 {
-	class Texture2D;
 	class Component;
 	class TransformComponent;
 	struct Transform;
@@ -55,6 +52,7 @@ namespace dae
 		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
 	private:
+		// TODO: use 'std::type_index' instead
 		std::unordered_map<const type_info*, std::unique_ptr<Component>> m_pComponents;
 
 		GameObject* m_pParent;

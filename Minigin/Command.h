@@ -8,6 +8,7 @@ namespace dae
 	class Command
 	{
 	public:
+		// TODO: not all commands use a gameObject, derive an "ActorCommand" or something along those lines
 		// Command constructor is in protected field
 		virtual ~Command() = default;
 

@@ -3,14 +3,6 @@
 
 #include <iostream>
 
-class NoTransformOnGameObject
-{
-	NoTransformOnGameObject()
-	{
-		std::cout << "ERROR: Passed GameObject does not have a transform component attached!\n";
-	}
-};
-
 dae::TransformComponent::TransformComponent(GameObject* pGameObject, float x, float y, float rotation)
 	: TransformComponent(pGameObject, Transform{x, y, rotation})
 {}

@@ -16,8 +16,8 @@ dae::TextureComponent::TextureComponent(GameObject* pParent)
 	, m_Width{0}
 	, m_Height{0}
 {
-	m_pTransformComponent = pParent->RequireComponent<TransformComponent>();
-	m_pTransformComponent->AddDependentComponentType(&typeid(*this));
+	// Presence of TransformComponent is guaranteed
+	m_pTransformComponent = pParent->GetComponent<TransformComponent>();
 }
 
 void dae::TextureComponent::Update()

@@ -158,7 +158,7 @@ void dae::GameObject::DeleteMarkedComponents()
 
 	for (const auto& type : m_pComponentTypesToDelete)
 	{
-		std::cout << "Deleted: " << type->name() << "\n";
+		std::cout << "Deleted: " << type.name() << "\n";
 		m_pComponents.erase(type);
 	}
 	m_pComponentTypesToDelete.clear();

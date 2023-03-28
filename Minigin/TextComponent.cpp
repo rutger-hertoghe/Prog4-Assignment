@@ -8,8 +8,6 @@
 #include "TextureComponent.h"
 #include "GameObject.h"
 
-//class TextureComponentNotFound{};
-
 dae::TextComponent::TextComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
 	: Component(pGameObject)
 	, m_NeedsUpdate{true}
@@ -17,7 +15,7 @@ dae::TextComponent::TextComponent(GameObject* pGameObject, const std::string& te
 	, m_Font(std::move(font))
 {
 	m_pTextureComponent = pGameObject->RequireComponent<TextureComponent>();
-	m_pTextureComponent->AddDependentComponentType(&typeid(*this));
+	m_pTextureComponent->AddDependentComponentType(std::type_index(typeid(TextComponent)));
 }
 
 void dae::TextComponent::Update()
@@ -37,11 +35,8 @@ void dae::TextComponent::Update()
 		}
 		SDL_FreeSurface(surf);
 
-		if(m_pTextureComponent)
-		{
-			m_pTextureComponent->SetTexture(std::make_shared<Texture2D>(texture));
-		}
-
+		m_pTextureComponent->SetTexture(std::make_shared<Texture2D>(texture));
+		
 		m_NeedsUpdate = false;
 	}
 }

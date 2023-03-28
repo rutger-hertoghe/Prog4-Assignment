@@ -20,11 +20,18 @@ namespace dae
 		[[nodiscard]] virtual bool IsPressed(int button) const = 0;
 
 	protected:
-		explicit InputDevice(unsigned int id)
+		explicit InputDevice() = default;
+	/*	explicit InputDevice(unsigned int id)
 			: m_DeviceID{ id }
 		{}
 
-		unsigned int m_DeviceID;
+		unsigned int GetDeviceID() const
+		{
+			return m_DeviceID;
+		}
+
+	private:
+		unsigned int m_DeviceID;*/
 	};
 }
 #endif

@@ -27,8 +27,8 @@ private:
 	std::bitset<numScanCodes> m_KeysReleasedThisFrame;
 };
 
-dae::Keyboard::Keyboard(unsigned int id)
-	: InputDevice(id)
+dae::Keyboard::Keyboard(/*unsigned int id*/)
+	//: InputDevice(id)
 {
 	m_pImpl = std::make_unique<KeyboardImplementation>();
 }

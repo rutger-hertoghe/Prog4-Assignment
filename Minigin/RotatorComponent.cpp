@@ -14,8 +14,6 @@ dae::RotatorComponent::RotatorComponent(GameObject* pGameObject, float angularSp
 void dae::RotatorComponent::Update()
 {
 	const auto deltaTime = Time::GetInstance().GetElapsed();
-	if(m_pTransformComponent)
-	{
-		m_pTransformComponent->Rotate(deltaTime * m_AngularSpeed);
-	}
+
+	m_pTransformComponent->Rotate(deltaTime * m_AngularSpeed);
 }

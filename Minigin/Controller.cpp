@@ -26,7 +26,7 @@ private:
 };
 
 dae::Controller::Controller(unsigned int id)
-	: InputDevice(id)
+	//: InputDevice(id)
 {
 	m_pImpl = std::make_unique<ControllerImplementation>(id);
 }

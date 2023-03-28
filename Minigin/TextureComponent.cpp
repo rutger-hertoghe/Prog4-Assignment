@@ -28,11 +28,9 @@ void dae::TextureComponent::Update()
 void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
-	if(m_pTransformComponent)
-	{
-		const auto pos = m_pTransformComponent->GetWorldTransform().m_Position;
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
-	}
+
+	const auto pos = m_pTransformComponent->GetWorldTransform().m_Position;
+	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, static_cast<float>(m_Width), static_cast<float>(m_Height));
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filename)

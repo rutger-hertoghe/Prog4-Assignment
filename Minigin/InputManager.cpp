@@ -11,15 +11,12 @@
 #include "Controller.h"
 #include "Keyboard.h"
 
-//#include "Command.h"
-
-
 dae::InputManager::InputManager()
 {
 	InitializeInputDevices();
 
 	constexpr int keyboardId{ 4 };
-	m_pKeyboard = static_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
+	m_pKeyboard = dynamic_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
 }
 
 bool dae::InputManager::ProcessInput()
@@ -76,7 +73,7 @@ void dae::InputManager::InitializeInputDevices()
 			std::cout << "Controller connected with ID " << i << "\n";
 		}
 	}
-	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>(XUSER_MAX_COUNT);
+	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>();
 }
 
 void dae::InputManager::UpdateInputDevices()

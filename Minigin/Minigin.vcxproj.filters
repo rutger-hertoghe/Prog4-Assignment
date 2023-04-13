@@ -48,6 +48,9 @@
     <Filter Include="Source Files\Components\RenderingComponents">
       <UniqueIdentifier>{c4819c8b-8d3e-4145-997f-b37b4c642357}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{b017264c-5fbb-4dc9-9669-a69849257eb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -164,6 +167,12 @@
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\TrashTheCache</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -267,6 +276,12 @@
     </ClCompile>
     <ClCompile Include="ThrowawayPlotsClass.cpp">
       <Filter>Source Files\TrashTheCache</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,27 +21,7 @@ dae::InputManager::InputManager()
 
 bool dae::InputManager::ProcessInput()
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT)
-		{
-			return false;
-		}
-		if (e.type == SDL_KEYDOWN)
-		{
-			m_pKeyboard->SetDown(e.key.keysym.scancode);
-		}
-		if (e.type == SDL_KEYUP)
-		{
-			m_pKeyboard->SetUp(e.key.keysym.scancode);
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN)
-		{
-
-		}
-		// IMGUI
-		ImGui_ImplSDL2_ProcessEvent(&e);
-	}
+	if (!ProcessSDLEvents()) return false;
 
 	UpdateInputDevices();
 	
@@ -120,4 +100,30 @@ void dae::InputManager::ProcessDeviceInput()
 			break;
 		}
 	}
+}
+
+bool dae::InputManager::ProcessSDLEvents()
+{
+	SDL_Event e;
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT)
+		{
+			return false;
+		}
+		if (e.type == SDL_KEYDOWN)
+		{
+			m_pKeyboard->SetDown(e.key.keysym.scancode);
+		}
+		if (e.type == SDL_KEYUP)
+		{
+			m_pKeyboard->SetUp(e.key.keysym.scancode);
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
+
+		}
+		// IMGUI
+		ImGui_ImplSDL2_ProcessEvent(&e);
+	}
+	return true;
 }

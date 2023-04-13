@@ -77,6 +77,7 @@ namespace dae
 		void InitializeInputDevices();
 		void UpdateInputDevices();
 		void ProcessDeviceInput();
+		bool ProcessSDLEvents();
 	};
 
 }

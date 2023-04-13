@@ -7,8 +7,6 @@
 
 #include <ranges>
 
-class NoParentError{};
-
 using namespace dae;
 
 dae::GameObject::GameObject()

@@ -10,12 +10,13 @@
 using namespace dae;
 
 dae::GameObject::GameObject(const std::string& name)
-	: GameObject(name, Transform{})
+	: GameObject{ name, Transform{} }
 {}
 
 dae::GameObject::GameObject(const std::string& name, const Transform& transform)
-	: m_Name(name)
-	, m_pParent(nullptr)
+	: m_Name{ name }
+	, m_MarkedForDestroy{ false }
+	, m_pParent{nullptr}
 {
 	RequireComponent<TransformComponent>(transform);
 }
@@ -122,6 +123,21 @@ std::vector<GameObject*> dae::GameObject::GetChildren()
 std::string dae::GameObject::GetName() const
 {
 	return m_Name;
+}
+
+void dae::GameObject::Destroy()
+{
+	m_MarkedForDestroy = true;
+	DetachFromParent();
+	for(const auto& child : m_pChildren)
+	{
+		child->Destroy();
+	}
+}
+
+bool dae::GameObject::IsMarkedForDestroy()
+{
+	return m_MarkedForDestroy;
 }
 
 void dae::GameObject::AddChild(GameObject* pChild)

@@ -1,43 +1,73 @@
 #include "Scene.h"
 #include "GameObject.h"
+#include "Component.h"
 
 using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name)
+	: m_Name{ name }
+{
+}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<GameObject>& pObject)
 {
-	m_objects.emplace_back(std::move(object));
+	m_pObjects.emplace_back(std::move(pObject));
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<Observer>& pObserver)
 {
-	// TODO: regarding Remove in game objects todo, this is the related code
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	m_pObservers.emplace_back(std::move(pObserver));
+}
+
+
+void dae::Scene::Remove(GameObject* pObjToRemove)
+{
+	std::erase_if(m_pObjects, [pObjToRemove](const std::unique_ptr<GameObject>& pObjInScene)
+		{
+			return pObjInScene.get() == pObjToRemove;
+		});
+}
+
+void dae::Scene::Remove(const std::string& objectName)
+{
+	std::erase_if(m_pObjects, [&objectName](const std::unique_ptr<GameObject>& pObject)
+		{
+			return pObject->GetName() == objectName;
+		});
 }
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	m_pObjects.clear();
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_objects)
+	// TODO: is inefficient right now, optimize this later (maybe make these separate functions?)
+	for(auto& pObject : m_pObjects)
 	{
-		object->Update();
+		pObject->Update();
+		if(pObject->IsMarkedForDestroy())
+		{
+			m_pObjectsToRemove.push_back(pObject.get());
+		}
+	}
+
+	for(const auto& pDestroyedObject : m_pObjectsToRemove)
+	{
+		Remove(pDestroyedObject);
 	}
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
+	for (const auto& pObject : m_pObjects)
 	{
-		object->Render();
+		pObject->Render();
 	}
 }
 

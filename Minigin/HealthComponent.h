@@ -24,12 +24,18 @@ namespace dae
 		void Damage(int amount);
 		void Heal(int amount);
 
+		[[nodiscard]] int GetHealth() const;
+		[[nodiscard]] int GetMaxHealth() const;
+
+		[[nodiscard]] Subject* GetDeathEvent() const;
+		[[nodiscard]] Subject* GetHealthChangedEvent() const;
+
 	private:
 		int m_MaxHealth;
 		int m_CurrentHealth;
 
 		std::unique_ptr<Subject> m_pDeathEvent;
-		std::unique_ptr<Subject> m_pLifeLostEvent;
+		std::unique_ptr<Subject> m_pHealthChangedEvent;
 
 		void ChangeHealth(int amount);
 	};

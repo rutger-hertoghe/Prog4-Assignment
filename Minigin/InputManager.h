@@ -70,7 +70,7 @@ namespace dae
 
 	private:
 		Keyboard* m_pKeyboard; // Raw pointer for easy access
-		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
+
 		std::unordered_map<ButtonAction, std::unique_ptr<Command>, ButtonAction> m_pCommandMap;
 		std::vector<std::unique_ptr<InputDevice>> m_pInputDevices;
 

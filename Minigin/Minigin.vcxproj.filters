@@ -51,6 +51,12 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{b017264c-5fbb-4dc9-9669-a69849257eb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events\Observers">
+      <UniqueIdentifier>{68202a39-86b3-4b07-9bc5-56a0fb7b7884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\DataComponents">
+      <UniqueIdentifier>{34171708-7837-43d6-8d12-20a5d1afb466}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -137,9 +143,6 @@
     <ClInclude Include="Keyboard.h">
       <Filter>Source Files\Input\Devices</Filter>
     </ClInclude>
-    <ClInclude Include="ActorCommand.h">
-      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
-    </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Source Files\Input\Commands\ActorCommands</Filter>
     </ClInclude>
@@ -167,17 +170,29 @@
     <ClInclude Include="ThrowawayPlotsClass.h">
       <Filter>Source Files\TrashTheCache</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>Source Files\Events</Filter>
-    </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Source Files\Components</Filter>
+    <ClInclude Include="Observer.h">
+      <Filter>Source Files\Events\Observers</Filter>
     </ClInclude>
-    <ClInclude Include="HealthDisplay.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="HealthObserver.h">
+      <Filter>Source Files\Events\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageCommand.h">
+      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDisplayObserver.h">
+      <Filter>Source Files\Events\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Source Files\Components\DataComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Source Files\Components\DataComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="AddScoreCommand.h">
+      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,9 +268,6 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\Input\Devices</Filter>
     </ClCompile>
-    <ClCompile Include="ActorCommand.cpp">
-      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
-    </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Source Files\Input\Commands\ActorCommands</Filter>
     </ClCompile>
@@ -286,11 +298,23 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+    <ClCompile Include="HealthObserver.cpp">
+      <Filter>Source Files\Events\Observers</Filter>
     </ClCompile>
-    <ClCompile Include="HealthDisplay.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DamageCommand.cpp">
+      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplayObserver.cpp">
+      <Filter>Source Files\Events\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Source Files\Components\DataComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Source Files\Components\DataComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="AddScoreCommand.cpp">
+      <Filter>Source Files\Input\Commands\ActorCommands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -55,8 +55,12 @@ namespace dae
 
 		[[nodiscard]] std::string GetName() const; // TODO: could maybe be const std::string&
 
+		void Destroy();
+		bool IsMarkedForDestroy();
+
 	private:
 		std::string m_Name;
+		bool m_MarkedForDestroy;
 
 		std::unordered_map<std::type_index, std::unique_ptr<Component>> m_pComponents;
 		//std::unordered_map<std::string, Subject*> m_pEvents;

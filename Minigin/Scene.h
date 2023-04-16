@@ -1,16 +1,25 @@
 #ifndef SCENE_H
 #define SCENE_H
 #include "SceneManager.h"
+#include "GameObject.h"
+#include "Observer.h"
+#include "Component.h"
 
 namespace dae
 {
-	class GameObject;
+	class Observer;
+	//class GameObject;
+
 	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::shared_ptr<GameObject> object);
-		void Remove(std::shared_ptr<GameObject> object);
+		void Add(std::unique_ptr<Observer>& pObserver);
+		void Add(std::unique_ptr<GameObject>& pObject);
+		// USE WITH CAUTION
+		void Remove(GameObject* pObjToRemove);
+		// USE WITH CAUTION
+		void Remove(const std::string& objectName);
 		void RemoveAll();
 
 		void Update();
@@ -25,10 +34,12 @@ namespace dae
 	private: 
 		explicit Scene(const std::string& name);
 
-		std::string m_name;
-		std::vector < std::shared_ptr<GameObject>> m_objects{};
+		std::string m_Name;
+		std::vector < std::unique_ptr<GameObject>> m_pObjects{};
+		std::vector<std::unique_ptr<Observer>> m_pObservers{};
+		std::vector<GameObject*> m_pObjectsToRemove{};
 
-		static unsigned int m_idCounter; 
+		static unsigned int m_idCounter;
 	};
 
 }

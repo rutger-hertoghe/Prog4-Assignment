@@ -1,10 +1,15 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-class Observer
+namespace dae
 {
-public:
-	virtual ~Observer() = default;
-	virtual void Notify() = 0;
-};
+	class GameObject;
+
+	class Observer
+	{
+	public:
+		virtual ~Observer() = default;
+		virtual void Notify(GameObject* pGameObject) = 0;
+	};
+}
 #endif

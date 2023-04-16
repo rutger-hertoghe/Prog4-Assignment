@@ -3,19 +3,21 @@
 
 #include <vector>
 
-class Observer;
-
-class Subject
+namespace dae
 {
-public:
-	void RegisterObserver(Observer* pObserver);
-	void UnregisterObserver(Observer* pObserver);
+	class Observer;
+	class GameObject;
 
-protected:
-	void NotifyObservers();
+	class Subject
+	{
+	public:
+		void RegisterObserver(Observer* pObserver);
+		void UnregisterObserver(Observer* pObserver);
+		void NotifyObservers(GameObject* pGameObject) const;
 
-private:
-	std::vector<Observer*> m_pRegisteredObservers;
-};
+	private:
+		std::vector<Observer*> m_pRegisteredObservers;
+	};
+}
 
 #endif

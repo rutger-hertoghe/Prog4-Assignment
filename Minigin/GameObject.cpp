@@ -9,12 +9,13 @@
 
 using namespace dae;
 
-dae::GameObject::GameObject()
-	: GameObject(Transform{})
+dae::GameObject::GameObject(const std::string& name)
+	: GameObject(name, Transform{})
 {}
 
-dae::GameObject::GameObject(const Transform& transform)
-	: m_pParent(nullptr)
+dae::GameObject::GameObject(const std::string& name, const Transform& transform)
+	: m_Name(name)
+	, m_pParent(nullptr)
 {
 	RequireComponent<TransformComponent>(transform);
 }
@@ -31,8 +32,7 @@ void GameObject::Update()
 
 void GameObject::Render() //const
 {
-	const auto textureComponent{ GetComponent<TextureComponent>() };
-	if(textureComponent)
+	if (const auto textureComponent{ GetComponent<TextureComponent>() })
 	{
 		textureComponent->Render();
 	}
@@ -117,6 +117,11 @@ GameObject* dae::GameObject::GetChildAt(int idx) const
 std::vector<GameObject*> dae::GameObject::GetChildren()
 {
 	return m_pChildren;
+}
+
+std::string dae::GameObject::GetName() const
+{
+	return m_Name;
 }
 
 void dae::GameObject::AddChild(GameObject* pChild)

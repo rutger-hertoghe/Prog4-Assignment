@@ -12,13 +12,14 @@ namespace dae
 	class Component;
 	class TransformComponent;
 	struct Transform;
+	class Subject;
 
 	class GameObject final
 	{
 	public:
 		// BIG SIX
-		explicit GameObject();
-		explicit GameObject(const Transform& transform);
+		explicit GameObject(const std::string& name);
+		explicit GameObject(const std::string& name, const Transform& transform);
 		~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;
@@ -52,8 +53,13 @@ namespace dae
 		[[nodiscard]] GameObject* GetChildAt(int idx) const;
 		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
+		[[nodiscard]] std::string GetName() const; // TODO: could maybe be const std::string&
+
 	private:
+		std::string m_Name;
+
 		std::unordered_map<std::type_index, std::unique_ptr<Component>> m_pComponents;
+		//std::unordered_map<std::string, Subject*> m_pEvents;
 
 		GameObject* m_pParent;
 		std::vector<GameObject*> m_pChildren;

@@ -10,6 +10,7 @@
 #include "Minigin.h"
 
 #include <iostream>
+#include <steam_api_common.h>
 
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -18,6 +19,8 @@
 #include "Time.h"
 
 #include "DataCollector.h"
+
+// TODO: cleanup the above (remove unused)
 
 SDL_Window* g_window{};
 
@@ -104,6 +107,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
+		SteamAPI_RunCallbacks();
 
 		// TODO: QUESTION sleeping works for low frame rates, but once I get in the desired range, he seems to not want to sleep anymore and I don't understand why
 		// Floating point error??? Probably not

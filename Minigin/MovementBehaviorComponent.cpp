@@ -8,8 +8,8 @@ dae::MovementBehaviorComponent::MovementBehaviorComponent(GameObject* pGameObjec
 	, m_Speed(speed)
 	, m_MovementDirection(0, 0)
 {
-	m_pTransformComponent = pGameObject->RequireComponent<TransformComponent>();
-	m_pTransformComponent->AddDependentComponentType(&typeid(TransformComponent));
+	// Presence of TransformComponent is guaranteed
+	m_pTransformComponent = pGameObject->GetComponent<TransformComponent>();
 }
 
 void dae::MovementBehaviorComponent::Update()

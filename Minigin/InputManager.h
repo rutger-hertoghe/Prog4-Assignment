@@ -53,6 +53,7 @@ namespace dae
 
 		size_t operator()(const ButtonAction& keyValue) const
 		{
+			// TODO: work with regular map, hash could fail
 			return	std::hash<int>()(keyValue.m_XInputGamepadButton)
 				^ std::hash<int>()(static_cast<int>(keyValue.m_ActionType))
 				^ std::hash<int>()(~static_cast<int>(keyValue.m_InputDeviceID))
@@ -69,13 +70,14 @@ namespace dae
 
 	private:
 		Keyboard* m_pKeyboard; // Raw pointer for easy access
-		std::vector<std::unique_ptr<Command>> m_pDefinedCommands;
+
 		std::unordered_map<ButtonAction, std::unique_ptr<Command>, ButtonAction> m_pCommandMap;
 		std::vector<std::unique_ptr<InputDevice>> m_pInputDevices;
 
 		void InitializeInputDevices();
 		void UpdateInputDevices();
 		void ProcessDeviceInput();
+		bool ProcessSDLEvents();
 	};
 
 }

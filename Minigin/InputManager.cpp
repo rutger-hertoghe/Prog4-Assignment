@@ -11,40 +11,17 @@
 #include "Controller.h"
 #include "Keyboard.h"
 
-//#include "Command.h"
-
-
 dae::InputManager::InputManager()
 {
 	InitializeInputDevices();
 
 	constexpr int keyboardId{ 4 };
-	m_pKeyboard = static_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
+	m_pKeyboard = dynamic_cast<Keyboard*>(m_pInputDevices[keyboardId].get());
 }
 
 bool dae::InputManager::ProcessInput()
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT)
-		{
-			return false;
-		}
-		if (e.type == SDL_KEYDOWN)
-		{
-			m_pKeyboard->SetDown(e.key.keysym.scancode);
-		}
-		if (e.type == SDL_KEYUP)
-		{
-			m_pKeyboard->SetUp(e.key.keysym.scancode);
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN)
-		{
-
-		}
-		// IMGUI
-		ImGui_ImplSDL2_ProcessEvent(&e);
-	}
+	if (!ProcessSDLEvents()) return false;
 
 	UpdateInputDevices();
 	
@@ -76,7 +53,7 @@ void dae::InputManager::InitializeInputDevices()
 			std::cout << "Controller connected with ID " << i << "\n";
 		}
 	}
-	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>(XUSER_MAX_COUNT);
+	m_pInputDevices[XUSER_MAX_COUNT] = std::make_unique<Keyboard>();
 }
 
 void dae::InputManager::UpdateInputDevices()
@@ -123,4 +100,30 @@ void dae::InputManager::ProcessDeviceInput()
 			break;
 		}
 	}
+}
+
+bool dae::InputManager::ProcessSDLEvents()
+{
+	SDL_Event e;
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT)
+		{
+			return false;
+		}
+		if (e.type == SDL_KEYDOWN)
+		{
+			m_pKeyboard->SetDown(e.key.keysym.scancode);
+		}
+		if (e.type == SDL_KEYUP)
+		{
+			m_pKeyboard->SetUp(e.key.keysym.scancode);
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
+
+		}
+		// IMGUI
+		ImGui_ImplSDL2_ProcessEvent(&e);
+	}
+	return true;
 }

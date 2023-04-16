@@ -1,6 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <typeindex>
 #include <vector>
 
 namespace dae
@@ -20,12 +21,12 @@ namespace dae
 
 		virtual void Update() = 0;
 
-		void AddDependentComponentType(const type_info* pDependentType)
+		void AddDependentComponentType(std::type_index pDependentType)
 		{
 			m_pDependentComponentTypes.push_back(pDependentType);
 		}
 
-		[[nodiscard]] const std::vector<const type_info*>& GetDependentComponentTypes()
+		[[nodiscard]] const std::vector<std::type_index>& GetDependentComponentTypes()
 		{
 			return m_pDependentComponentTypes;
 		}
@@ -43,7 +44,7 @@ namespace dae
 	private:
 		GameObject* m_pGameObject;
 
-		std::vector<const type_info*> m_pDependentComponentTypes;
+		std::vector<std::type_index> m_pDependentComponentTypes;
 	};
 }
 

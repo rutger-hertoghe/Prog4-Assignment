@@ -7,16 +7,16 @@
 
 #include <ranges>
 
-class NoParentError{};
-
 using namespace dae;
 
-dae::GameObject::GameObject()
-	: GameObject(Transform{})
+dae::GameObject::GameObject(const std::string& name)
+	: GameObject{ name, Transform{} }
 {}
 
-dae::GameObject::GameObject(const Transform& transform)
-	: m_pParent(nullptr)
+dae::GameObject::GameObject(const std::string& name, const Transform& transform)
+	: m_Name{ name }
+	, m_MarkedForDestroy{ false }
+	, m_pParent{nullptr}
 {
 	RequireComponent<TransformComponent>(transform);
 }
@@ -33,8 +33,7 @@ void GameObject::Update()
 
 void GameObject::Render() //const
 {
-	const auto textureComponent{ GetComponent<TextureComponent>() };
-	if(textureComponent)
+	if (const auto textureComponent{ GetComponent<TextureComponent>() })
 	{
 		textureComponent->Render();
 	}
@@ -121,6 +120,26 @@ std::vector<GameObject*> dae::GameObject::GetChildren()
 	return m_pChildren;
 }
 
+std::string dae::GameObject::GetName() const
+{
+	return m_Name;
+}
+
+void dae::GameObject::Destroy()
+{
+	m_MarkedForDestroy = true;
+	DetachFromParent();
+	for(const auto& child : m_pChildren)
+	{
+		child->Destroy();
+	}
+}
+
+bool dae::GameObject::IsMarkedForDestroy()
+{
+	return m_MarkedForDestroy;
+}
+
 void dae::GameObject::AddChild(GameObject* pChild)
 {
 	m_pChildren.push_back(pChild);
@@ -158,7 +177,7 @@ void dae::GameObject::DeleteMarkedComponents()
 
 	for (const auto& type : m_pComponentTypesToDelete)
 	{
-		std::cout << "Deleted: " << type->name() << "\n";
+		std::cout << "Deleted: " << type.name() << "\n";
 		m_pComponents.erase(type);
 	}
 	m_pComponentTypesToDelete.clear();

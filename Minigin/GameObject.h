@@ -5,22 +5,21 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
-
-#include "TransformComponent.h"
+#include <typeindex>
 
 namespace dae
 {
-	class Texture2D;
 	class Component;
 	class TransformComponent;
 	struct Transform;
+	class Subject;
 
 	class GameObject final
 	{
 	public:
 		// BIG SIX
-		explicit GameObject();
-		explicit GameObject(const Transform& transform);
+		explicit GameObject(const std::string& name);
+		explicit GameObject(const std::string& name, const Transform& transform);
 		~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;
@@ -54,8 +53,17 @@ namespace dae
 		[[nodiscard]] GameObject* GetChildAt(int idx) const;
 		[[nodiscard]] std::vector<GameObject*> GetChildren();
 
+		[[nodiscard]] std::string GetName() const; // TODO: could maybe be const std::string&
+
+		void Destroy();
+		bool IsMarkedForDestroy();
+
 	private:
-		std::unordered_map<const type_info*, std::unique_ptr<Component>> m_pComponents;
+		std::string m_Name;
+		bool m_MarkedForDestroy;
+
+		std::unordered_map<std::type_index, std::unique_ptr<Component>> m_pComponents;
+		//std::unordered_map<std::string, Subject*> m_pEvents;
 
 		GameObject* m_pParent;
 		std::vector<GameObject*> m_pChildren;
@@ -67,7 +75,7 @@ namespace dae
 		void DeleteMarkedComponents();
 
 		// To prevent deletion in Update(), which may cause undefined behavior
-		std::vector<const type_info*> m_pComponentTypesToDelete;
+		std::vector<std::type_index> m_pComponentTypesToDelete;
 	};
 
 
@@ -81,9 +89,10 @@ namespace dae
 	template<typename T_Component>
 	T_Component* GameObject::GetComponent()
 	{
-		if(m_pComponents.contains(&typeid(T_Component)))
+		const auto type{ std::type_index{typeid(T_Component)} };
+		if(m_pComponents.contains(type))
 		{
-			return static_cast<T_Component*>(m_pComponents.at(&typeid(T_Component)).get());
+			return static_cast<T_Component*>(m_pComponents.at(type).get());
 		}
 		return nullptr;
 	}
@@ -96,14 +105,15 @@ namespace dae
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::AddComponent(Args... args)
 	{
-		// TODO: Add with [] as well? (suggestion Tanguy)
-		if(m_pComponents.contains(&typeid(T_Component)))
+		const auto type{ std::type_index{typeid(T_Component)} };
+		// TODO: Add with [] as well? (suggestion Tanguy) -> Tried this, didn't seem to work. Did not fully investigate yet
+		if(m_pComponents.contains(type))
 		{
 			std::cerr << "Component already exists in map\n";
-			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)].get());
+			return static_cast<T_Component*>(m_pComponents[type].get());
 		}
 
-		m_pComponents.insert(std::make_pair(&typeid(T_Component), std::make_unique<T_Component>(this, args...)));
+		m_pComponents.insert(std::make_pair(type, std::make_unique<T_Component>(this, args...)));
 		return GetComponent<T_Component>();
 	}
 
@@ -117,10 +127,11 @@ namespace dae
 			return false;
 		}
 
+		const auto type{ std::type_index{typeid(T_Component)} };
 		if(auto pComponent{ GetComponent<T_Component>() })
 		{
 			RemoveDependentComponents(pComponent);
-			m_pComponentTypesToDelete.push_back(&typeid(T_Component));
+			m_pComponentTypesToDelete.push_back(type);
 			return true;
 		}
 		
@@ -136,11 +147,12 @@ namespace dae
 	template<typename T_Component, typename... Args, typename>
 	T_Component* GameObject::RequireComponent(Args... args)
 	{
-		if(m_pComponents.contains(&typeid(T_Component)))
+		const auto type{ std::type_index{typeid(T_Component)} };
+		if(m_pComponents.contains(type))
 		{
-			return static_cast<T_Component*>(m_pComponents[&typeid(T_Component)].get());
+			return static_cast<T_Component*>(m_pComponents[type].get());
 		}
-		std::cout << "Automatically attaching " << typeid(T_Component).name() << " to object!\n";
+		std::cout << "Automatically attaching " << type.name() << " to object!\n";
 		return AddComponent<T_Component>(args...);
 	}
 }

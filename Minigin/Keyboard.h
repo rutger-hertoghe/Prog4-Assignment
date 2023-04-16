@@ -10,7 +10,7 @@ namespace dae
 	class Keyboard final: public InputDevice
 	{
 	public:
-		explicit Keyboard(unsigned int id);
+		explicit Keyboard(/*unsigned int id*/);
 		virtual ~Keyboard() override;
 
 		Keyboard(const Keyboard& other) = delete;

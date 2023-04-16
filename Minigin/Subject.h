@@ -8,9 +8,11 @@ namespace dae
 	class Observer;
 	class GameObject;
 
-	class Subject
+	class Subject final
 	{
 	public:
+		Subject() = default;
+
 		void RegisterObserver(Observer* pObserver);
 		void UnregisterObserver(Observer* pObserver);
 		void NotifyObservers(GameObject* pGameObject) const;
